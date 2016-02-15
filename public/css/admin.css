@@ -1,0 +1,310 @@
+
+/*==================SECTION===========================*/
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
+body{
+  background: #fff;
+}
+.content{
+  padding-top: 3%;
+}
+.wrapper{
+  min-height:100%;
+  position:relative;
+  overflow: hidden;
+}
+
+.side{
+  background: #f0f0f5;
+}
+.sidebar{
+  background:#fff;
+  border-left:1px solid  #f0f0f5; 
+  border-right:1px solid  #f0f0f5; 
+}
+/*==================NAV===========================*/
+a:hover{
+  color: #ff0066;
+}
+
+a#homesmall{
+  font-family: 'Oswald', sans-serif;
+  text-decoration: none;
+  font-size: 20px; 
+  color: #89a1d4; 
+}
+
+nav{
+  background-color: #4aa3df;
+}
+
+li#navbar-button:hover,
+a#dropDown:visited{
+  background-color: #f0f0f5;
+}
+
+.a {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.affix {
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+.control-label{
+  color: #ff0066;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.navbar-default .navbar-text{
+  color: #fff;
+}
+.navbar-button{
+  color: #f3cf1b;
+  font-size: 16px;
+}
+/*==================END NAV===========================*/
+
+/*==================FROM HEADER===========================*/
+div#head{
+  padding-bottom: 0px;
+}
+
+ul#head li{
+  display: inline;
+}
+
+header{
+  background-color: #ffffff;
+}
+
+p.header,
+h1.header{
+  color: #ff0066;
+}
+/*==================END HEADER===========================*/
+
+
+/*==================FROM-H1===========================*/
+
+h1.title,
+h2.title{
+  color: #660066;
+  font-weight: bold;
+}
+h2.description{
+  color: green;
+}
+h2.title,
+h2.description,
+h3.title{
+    font-weight: bold;
+}
+h3.title{
+  color: #6600cc;
+}
+h4.title{
+  color: #0000ff;
+}
+img:hover{
+  opacity: 0.85;
+}
+
+.btn-primary,
+.btn-danger{
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+.badge-span{
+  background: white;
+  color: #cc0066;
+}
+.list-group-item{
+  color: #ff3300;
+  font-size: 20px;
+}
+.list-group{
+  padding:2% 0;
+}
+
+img {
+  width: 100%;
+  height: 450px;
+}
+.clear{
+  height: 10px;
+}
+
+li.list_answer:hover{
+  background: #f3d681;
+}
+.list_answer{
+     word-wrap: break-word; 
+    font-weight: bold;
+    background: #e0f0ff;
+    padding: 10px;
+    color: #993333;
+     vertical-align: top; 
+    list-style: none;
+    display: list-item;
+    border-radius: 10px;
+}
+ul#form_test img:hover{
+  opacity: 0.85;
+  cursor: pointer;
+}
+.answer_content{
+  padding-left: 5px;
+}
+.div_i{
+  padding: 10px 0;
+}
+
+/*==================END FORM-H1===========================*/
+
+/*==================RESPONSIVE===========================*/
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 479px){
+  .movePost{
+  font-size: 8px;
+}
+  header{
+    display: none;
+  }
+
+  #toTop{
+    width: 20px;
+    height: 20px;
+  }
+
+  div#uhchat{
+    display: none;
+  }
+  .content{
+    margin: 0 5%;
+  }
+}
+
+@media (max-width: 767px){
+    div > #uhchat{
+    bottom: 0px;
+  }
+  a> img{
+    height: 50px;
+  }
+}
+@media (min-width: 480px){
+  header{
+    font-size: 30px;
+    height: 136px;
+    font-weight: bold;
+    text-align: left;
+    margin:0 auto;
+  }
+
+  div.header{
+
+  }
+
+   h1.header{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: left;
+    margin:0 auto;
+  }
+  p.header{
+    font-size: 16px;
+    margin: 0 auto;
+  }
+  .content{
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  #homesmall{
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  h1.header{
+    font-size: 30px;
+    font-weight: bold;
+    margin:0 auto;
+  }
+  p.header{
+    font-size: 20px;
+    margin: 0 auto;
+  }
+  footer{
+    height: 40px;
+  }
+  #homesmall{
+    display: none;
+  }
+  .content{
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  h1.header{
+    font-size: 30px;
+    font-weight: bold;
+    margin:0 auto;
+  }
+  p.header{
+    font-size: 20px;
+    margin: 0 auto;
+  }
+  footer{
+    height: 40px;
+  }
+
+  #homesmall{
+    display: none;
+  }
+    .content{
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+}
+
+#toTop {
+    background-position: 50% 50%;
+    bottom: 50px;
+    box-shadow: rgba(0, 0, 0, 0.0470588) 0px 0px 10px 0px;
+    box-sizing: border-box;
+    color: rgb(232, 98, 86);
+    display: block;
+    height: 60px;
+    position: fixed;
+    right: 20px;
+    text-decoration: none;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 60px;
+    z-index: 10;
+    perspective-origin: 30px 30px;
+    transform-origin: 30px 30px;
+    background: rgba(232, 98, 86, 0.7) url("https://codyhouse.co/demo/back-to-top/img/cd-top-arrow.svg") no-repeat scroll 50% 50% / auto padding-box border-box;
+    border: 0px none rgb(232, 98, 86);
+    font: normal normal normal normal 16px / 16px Bitter, sans-serif;
+    outline: rgb(232, 98, 86) none 0px;
+    overflow: hidden;
+    transition: opacity 0.3s ease 0s, visibility 0s ease 0s;
+}
+
