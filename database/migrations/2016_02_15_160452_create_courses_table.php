@@ -14,12 +14,12 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('Title')->unique();
             $table->string('Description')->default(null);
             $table->float('TotalHours')->default(0);
             $table->integer('NoOfUsers')->default(0);
             $table->integer('NoOfPosts')->default(0);
+            $table->timestamps();
         });
     }
 

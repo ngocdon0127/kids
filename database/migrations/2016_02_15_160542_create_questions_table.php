@@ -14,7 +14,6 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->integer('PostID');
             $table->integer('ThumbnailID')->default(1);
             $table->integer('FormatID')->default(1);
@@ -22,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->string('Photo')->default(null);
             $table->string('Video')->default(null);
             $table->string('Description')->default(null);
+            $table->timestamps();
         });
     }
 

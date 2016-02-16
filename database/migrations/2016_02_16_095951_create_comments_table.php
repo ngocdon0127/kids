@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubquestionsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreateSubquestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subquestions', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('QuestionID');
-            $table->string('Question');
+            $table->string('comment');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateSubquestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('subquestions');
+        Schema::drop('comments');
     }
 }

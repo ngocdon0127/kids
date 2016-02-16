@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubquestionsTable extends Migration
+class CreateLearningsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateSubquestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subquestions', function (Blueprint $table) {
+        Schema::create('learnings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('QuestionID');
-            $table->string('Question');
+            $table->integer('UserID');
+            $table->integer('CourseID');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateSubquestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('subquestions');
+        Schema::drop('learnings');
     }
 }

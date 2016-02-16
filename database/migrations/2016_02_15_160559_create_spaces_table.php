@@ -14,8 +14,8 @@ class CreateSpacesTable extends Migration
     {
         Schema::create('spaces', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->integer('QuestionID');
+            $table->timestamps();
         });
     }
 

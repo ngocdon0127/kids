@@ -14,12 +14,12 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->integer('QuestionID');
             $table->integer('SpaceID');
             $table->integer('SubQuestionID');
             $table->boolean('Logical')->default(false);
             $table->string('Detail')->default(null);
+            $table->timestamps();
         });
     }
 

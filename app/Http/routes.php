@@ -30,9 +30,10 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'AdminController@index'
 	]);
 
-	Route::get('/', function () {
-		return view('welcome');
-	});
+	Route::get('/', [
+		'as' => 'user.index',
+		'uses' => 'PostsController@viewnewestposts'
+	]);
 
 	Route::get('/ajax/checkcoursetitle/{title}', [
 		'as' => 'ajax.checkcoursetitle',
@@ -43,6 +44,59 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/course/{id}/edit', [
 		'as' => 'course.edit',
 		'uses' => 'CoursesController@edit'
+	]);
+
+	// edit post {id}
+	Route::get('/post/{id}/edit', [
+		'as' => 'post.edit',
+		'uses' => 'PostsController@edit'
+	]);
+
+	Route::put('/admin/editpost/{id}', [
+		'as' => 'post.update',
+		'uses' => 'PostsController@update'
+	]);
+
+	Route::get('/post/{postid}', [
+		'as' => 'user.viewpost',
+		'uses' => 'PostsController@viewpost'
+	]);
+
+	Route::get ('/question/{questionid}', [
+		'as' => 'user.viewquestion',
+		'uses' => 'QuestionsController@viewquestion'
+	]);
+
+	Route::get('question/{id}/edit', [
+		'as' => 'question.edit',
+		'uses' => 'QuestionsController@edit'
+	]);
+
+	// edit question {id} (Answers) // Will merge with 2 above routes later.
+	Route::get('/answer/{questionid}/edit', [
+		'as' => 'answer.edit',
+		'uses' => 'AnswersController@edit'
+	]);
+
+	Route::put('/admin/editanswer/{questionid}', [
+		'as' => 'answer.update',
+		'uses' => 'AnswersController@update'
+	]);
+
+	// delete question {id}
+	Route::delete('/question/{id}/delete', [
+		'as' => 'question.destroy',
+		'uses' => 'QuestionsController@destroy'
+	]);
+
+	Route::post('/timeonline', [
+		'as' => 'count.timeonline',
+		'uses' => 'TimesController@incTimeOnline'
+	]);
+
+	Route::post('/trackip', [
+		'as' => 'count.ip',
+		'uses' => 'TimesController@trackip'
 	]);
 
 	Route::group(['prefix' => '/admin'], function(){
@@ -83,8 +137,8 @@ Route::group(['middleware' => ['web']], function () {
 			'uses'  => "SpacesController@update"
 		]);
 		Route::post('/addanswer/{questionid}',[
-		'as'    => 'admin.saveanswer',
-		'uses'  => 'AnswersController@saveanswer'
+			'as'    => 'admin.saveanswer',
+			'uses'  => 'AnswersController@saveanswer'
 		]);
 		Route::put('/editcourse/{id}', [
 			'as' => 'course.update',
@@ -110,6 +164,15 @@ Route::group(['middleware' => ['web']], function () {
 			'as'    => 'admin.destroycourse',
 			'uses'  => 'CoursesController@destroy'
 		]);
+		Route::put('/editquestion/{id}', [
+			'as' => 'question.update',
+			'uses' => 'QuestionsController@update'
+		]);
+
+		Route::post('/editquestion/{id}', [
+			'as' => 'question.update',
+			'uses' => 'QuestionsController@update'
+		]);
 	});
 
 });
@@ -128,4 +191,14 @@ Route::get('/auth/facebook', [
 Route::get('/auth/google', [
 	'as' => 'login.google',
 	'uses' => 'Auth\AuthController@googleRedirectToProvider'
+]);
+
+Route::get('/search', [
+	'as' => 'search',
+	'uses' => 'PostsController@searchpostsbyhashtag'
+]);
+
+Route::get('/ajax/dic', [
+	'as' => 'ajax.dic',
+	'uses' => 'PageController@dic'
 ]);

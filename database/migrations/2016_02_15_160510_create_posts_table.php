@@ -14,7 +14,6 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->integer('CourseID');
             $table->integer('ThumbnailID');
             $table->string('Title');
@@ -23,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('Video')->default(null);
             $table->string('Description')->default(null);
             $table->integer('visited')->default(0);
+            $table->timestamps();
         });
     }
 

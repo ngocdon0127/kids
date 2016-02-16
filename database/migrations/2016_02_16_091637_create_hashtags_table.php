@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubquestionsTable extends Migration
+class CreateHashtagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,9 @@ class CreateSubquestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subquestions', function (Blueprint $table) {
+        Schema::create('hashtags', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('QuestionID');
-            $table->string('Question');
+            $table->string('Hashtag')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateSubquestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('subquestions');
+        Schema::drop('hashtags');
     }
 }

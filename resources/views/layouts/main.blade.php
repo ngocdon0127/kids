@@ -48,72 +48,76 @@
 	<script type="text/javascript" src="/js/bootstrap-select.js"></script>
 	@if (auth() && (auth()->user()))
 	<script type="text/javascript">
-		// var logout = 0;
-		// function markTimeOnline(isUnload) {
-		// 	$.ajax({
-		// 		url: "/timeonline",
-		// 		type: "POST",
-		// 		beforeSend: function (xhr) {
-		// 			var token = $('meta[name="_token"]').attr('content');
+		var logout = 0;
+		function markTimeOnline(isUnload) {
+			$.ajax({
+				url: "/timeonline",
+				type: "POST",
+				beforeSend: function (xhr) {
+					var token = $('meta[name="_token"]').attr('content');
 
-		// 			if (token) {
-		// 				return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-		// 			}
-		// 		},
-		// 		data: {UserID: {!! auth()->user()->getAuthIdentifier() !!}, unload: isUnload },
-		// 		success: function (data) {
-		// 			console.log(data);
-		// 		}, error: function () {
-		// 			console.log("error!!!!");
-		// 		}
-		// 	}); //end of ajax
-		// }
-		// window.onbeforeunload = closingCode;
-		// function closingCode(){
-		// 	if (logout == 0)
-		// 		markTimeOnline(1);
-		// 	return null;
-		// }
+					if (token) {
+						return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				data: {UserID: {!! auth()->user()->getAuthIdentifier() !!}, unload: isUnload },
+				success: function (data) {
+					console.log(data);
+				}, error: function () {
+					console.log("error!!!!");
+				}
+			}); //end of ajax
+		}
+		window.onbeforeunload = closingCode;
+		function closingCode(){
+			if (logout == 0)
+				markTimeOnline(1);
+			return null;
+		}
 	</script>
 	@endif
 	<script type='text/javascript'>
-		// function saveIP() {
-		// 	console.log('start ajax');
-		// 	$.ajax({
-		// 		url: "/trackip",
-		// 		type: "POST",
-		// 		beforeSend: function (xhr) {
-		// 			var token = $('meta[name="_token"]').attr('content');
+		function saveIP() {
+			console.log('start ajax');
+			$.ajax({
+				url: "/trackip",
+				type: "POST",
+				beforeSend: function (xhr) {
+					var token = $('meta[name="_token"]').attr('content');
 
-		// 			if (token) {
-		// 				return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-		// 			}
-		// 		},
-		// 		@if (auth() && (auth()->user()))
-		// 		data: {UserID: {!! auth()->user()->getAuthIdentifier() !!}, uri: "{{$_SERVER['REQUEST_URI']}}"},
-		// 		@else
-		// 		data: {uri: "{{$_SERVER['REQUEST_URI']}}"},
-		// 		@endif
-		// 		success: function (data) {
-		// 			console.log(data);
-		// 		}, error: function () {
-		// 			console.log("error!!!!");
-		// 		}
-		// 	}); //end of ajax
-		// }
+					if (token) {
+						return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				@if (auth() && (auth()->user()))
+				data: {UserID: {!! auth()->user()->getAuthIdentifier() !!}, uri: "{{$_SERVER['REQUEST_URI']}}"},
+				@else
+				data: {uri: "{{$_SERVER['REQUEST_URI']}}"},
+				@endif
+				success: function (data) {
+					console.log(data);
+				}, error: function () {
+					console.log("error!!!!");
+				}
+			}); //end of ajax
+		}
 	</script>
 	<!--Start of Zopim Live Chat Script-->
 	<script type="text/javascript">
-	// window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
-	// d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-	// _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
-	// $.src="//v2.zopim.com/?3dgbwbmhc2aL8G86QOWgVfX26ycur6x0";z.t=+new Date;$.
-	// type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+	window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+	d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+	_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+	$.src="//v2.zopim.com/?3dgbwbmhc2aL8G86QOWgVfX26ycur6x0";z.t=+new Date;$.
+	type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
 	</script>
 	<!--End of Zopim Live Chat Script-->
 	@yield('head.css')
 </head>
-<body>
+@if (auth() && (auth()->user()))
+<body onload="markTimeOnline(0); saveIP();">
+@else
+<body onload="saveIP();">
+@endif
 	<!-- Start of Google Analytics -->
 	<script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -20,10 +20,9 @@
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav">
 				<li id="navbar-button"><a class="navbar-button" href="/"><span class="glyphicon glyphicon-home"> Home</span></a></li>
-				@if ((auth()->user()) && (auth()->user()->admin == 1))
+				@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 				<li id="navbar-button"><a class="navbar-button" href="{{route('admin')}}">Admin</a></li>
 				@endif
-				<li id="navbar-button"><a class="navbar-button" href="http://kids.evangelsenglish.com">Kids</a></li>
 			</ul>
 			{!! Form::open(['method' => 'GET', 'name' => 'searchForm', 'url' => '/search', 'role'=>'search', 'class' => 'navbar-form navbar-right']) !!}
 				
