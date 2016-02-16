@@ -19,9 +19,9 @@
 	<link rel="stylesheet" type="text/css" href="/css/admin.css">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
 	<meta name="_token" content="{!! csrf_token() !!}"/>
-	@if ((stripos($_SERVER['REQUEST_URI'], 'post') !== false) && isset($Photo))
-	<meta name="description" content="{{$Title . ' ' . $Description}} Evangels English. Know English. Know the World" />
-	<meta name="keywords" content="{{$Title . ' ' . $Description}} Evangels English, Know English, Know the World, learn english online, learning online, english, online, learning" />
+	@if (stripos($_SERVER['REQUEST_URI'], 'post') !== false)
+	<meta name="description" content="{{$Post['Title'] . ' ' . $Post['Description']}} Evangels English. Know English. Know the World" />
+	<meta name="keywords" content="{{$Post['Title'] . ' ' . $Post['Description']}} Evangels English, Know English, Know the World, learn english online, learning online, english, online, learning" />
 	@else
 	<meta name="description" content="Evangels English. Know English. Know the World" />
 	<meta name="keywords" content="learn english online, learning online, english, online, learning" />
@@ -33,10 +33,10 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="vi_VN" />
 	<meta property="og:url" content="http://{{$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']}}" />
-	@if ((stripos($_SERVER['REQUEST_URI'], 'post') !== false) && isset($Photo))
-	<meta property="og:image" content="http://{{$_SERVER['HTTP_HOST']}}/images/imagePost/{{$Photo}}" />
-	<meta property="og:title" content="{{$Title}} - Evangels English" />
-	<meta property="og:description" content="{{$Description}} Evangels English. Know English. Know the World" />
+	@if ((stripos($_SERVER['REQUEST_URI'], 'post') !== false) && isset($Post['Photo']))
+	<meta property="og:image" content="http://{{$_SERVER['HTTP_HOST']}}/images/imagePost/{{$Post['Photo']}}" />
+	<meta property="og:title" content="{{$Post['Title']}} - Evangels English" />
+	<meta property="og:description" content="{{$Post['Description']}} Evangels English. Know English. Know the World" />
 	@else
 	<meta property="og:image" content="http://{{$_SERVER['HTTP_HOST']}}/images/evangelsenglish.png" />
 	<meta property="og:title" content="Evangels English. Know English. Know the World" />

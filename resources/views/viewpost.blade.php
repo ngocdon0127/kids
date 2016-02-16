@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('head.title')
-	{{$Title}} - Evangels English
+	{{$Post['Title']}} - Evangels English
 @endsection
 @section('body.content')
 	<div id="fb-root"></div>
@@ -11,19 +11,19 @@
 	js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1657402167852948";
 	fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
-	<h2 class="title">{{$Title}}</h2>
-	<h2 class="description">{{$Description}}</h2>
+	<h2 class="title">{{$Post['Title']}}</h2>
+	<h2 class="description">{{$Post['Description']}}</h2>
 	<li class="list-group-item">
-		@if ($Thumbnail == 1)
-			<img class="img-responsive" alt="{{$Title . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Photo}}" />
-		@elseif ($Thumbnail == 2)
+		@if ($Post['ThumbnailID'] == 1)
+			<img class="img-responsive" alt="{{$Title . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Post['Photo']}}" />
+		@elseif ($Post['ThumbnailID'] == 2)
 		<div class="embed-responsive embed-responsive-4by3">
-			<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$Video}}" frameborder="0" allowfullscreen></iframe>
+			<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$Post['Video']}}" frameborder="0" allowfullscreen></iframe>
 		</div>
 		@endif
 	</li>
 	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
-		<a class ="col-xs-12 btn btn-primary" href="{{route('post.edit', $PostID)}}">Sửa thông tin bài đăng</a>
+		<a class ="col-xs-12 btn btn-primary" href="{{route('post.edit', $Post['id'])}}">Sửa thông tin bài đăng</a>
 		<a class="col-xs-12 btn btn-primary" data-toggle="modal" href='#modal-add-question'>Thêm câu hỏi</a>
 
 		<a class="col-xs-12 btn btn-danger" data-toggle="modal" href='#modal-id'>Xóa bài đăng này</a>
@@ -39,7 +39,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<a class ="btn btn-primary" href="{{route('admin.destroypost',$PostID)}}">Xóa</a>
+						<a class ="btn btn-primary" href="{{route('admin.destroypost',$Post['id'])}}">Xóa</a>
 					</div>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
 				</div>
 				<div class="modal-body">
 					@foreach (App\ConstsAndFuncs::$FORMATS as $k => $v)
-					<a class ="btn btn-primary" href="{{route('admin.addquestion', $PostID . '?FormatID=' . $k)}}">{{$v}}</a>
+					<a class ="btn btn-primary" href="{{route('admin.addquestion', $Post['id'] . '?FormatID=' . $k)}}">{{$v}}</a>
 					@endforeach
 				</div>
 				<div class="modal-footer">
@@ -102,7 +102,7 @@
 
 //                var xml = jQuery.parseXML(obj.responseText);
 //                        console.log(xml.getElementsByTagName('logical')[0].innerHTML);
-			if (answerID == trueAnswerID) {
+			if (trueAnswerID == answerID) {
 				ob(id).style.background = '#66ff66';
 				score++;
 			}
@@ -110,6 +110,7 @@
 				ob(id).style.background = '#ff5050';
 			}
 			var idTrue = 'answer_' + questionID + '_' + trueAnswerID;
+			console.log(idTrue);
 			ob(idTrue).style.background = '#66ff66';
 			fill++;
 			if (fill >= maxScore){
@@ -162,9 +163,6 @@
 					}, timeScrollToNextQuestion);
 				}, delayToNextQuestion);
 			}
-//                obj.open('GET', '/ajax/checkanswer/' + questionID + '/' + answerID, true);
-//                ob.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//                obj.send();
 
 		}
 
@@ -251,11 +249,45 @@
 			@else
 			<h3 class="title" id="title_question_{!! $key + 1 !!}">Câu hỏi số <?php echo $count_answer++; ?>:</h3>
 			@endif
-			<h4 class="title">{!! nl2br($q['Question']) . ((strlen($q['Description']) > 0) ? (" :<br /><br /> " . nl2br($q['Description'])) : "") !!}</h4>
+
+			<!-- Trắc nghiệm -->
+			@if ($q['FormatID'] == 1)
+				<h4 class="title">{!! nl2br($q['Question']) . ((strlen($q['Description']) > 0) ? (" :<br /><br /> " . nl2br($q['Description'])) : "") !!}</h4>
+					@if ($q['ThumbnailID'] == 1)
+						@if ($q['Photo'] != null)
+							<li class="list-group-item list-group-item-info">
+								@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
+									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+								@else
+									<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+								@endif
+							</li>
+						@endif
+					@elseif ($q['ThumbnailID'] == 2)
+						@if ($q['Video'] != null)
+							<div class="embed-responsive embed-responsive-4by3">
+							<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
+							</div>
+						@endif
+					@endif
+				
+				<ul class="list-group" id="ul_question_{{$q['id']}}">
+					@foreach($AnswersFor1[$q['id']] as $k => $a)
+						<li id="answer_{{$q['id']}}_{{$a['id']}}" class="list_answer"  onclick="check({{$q['id']}}, {{$a['id']}}, {{ $TrueAnswersFor1[$q['id']]}}, {!! $key + 2 !!})" style="cursor: pointer">
+							<input type="checkbox" id="radio_answer_{{$q['id']}}_{{$a['id']}}" name="question_{{$q['id']}}"/>
+							<span class="answer_content">{!! \App\Http\Controllers\AnswersController::underline($a['Detail']) !!}</span>
+						</li>
+
+						<div class="clear"></div>
+					@endforeach
+				</ul>
+			<!-- End of Trắc nghiệm -->
+			@elseif ($q['FormatID'] == 2)
+			<!-- Điền từ -->
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
-							@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
 								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
 							@else
 								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
@@ -269,23 +301,108 @@
 						</div>
 					@endif
 				@endif
-			
-			<ul class="list-group" id="ul_question_{{$q['id']}}">
-				@foreach($Bundle[$q['id']] as $k => $a)
-					<li id="answer_{{$q['id']}}_{{$a['id']}}" class="list_answer"  onclick="check({{$q['id']}}, {{$a['id']}}, {{$BundleAnswers[$q['id']]}}, {!! $key + 2 !!})" style="cursor: pointer">
-						<input type="checkbox" id="radio_answer_{{$q['id']}}_{{$a['id']}}" name="question_{{$q['id']}}"/>
-						<span class="answer_content">{!! \App\Http\Controllers\AnswersController::underline($a['Detail']) !!}</span>
-					</li>
+				<?php
+					$subP = \App\Questions::getFilledQuestion($q['Question']);
+					reset($Spaces);  // don't know what's different between this view & viewfilledquestion
+				?>
+				<div style="color:#cc0066; font-weight:bold;">
+				@if (strlen($q['Description']) > 0)
+					{!! nl2br($q['Description']) . ":" !!}
+				@endif
+				</div>
+				<div>
+					@foreach ($subP as $value)
+						{!! nl2br($value) !!}
+						@if (count($Spaces[$q['id']]) > 0)
+						<select style="color:#cc0066" id="select_space_{{current($Spaces[$q['id']])['id']}}" data-show-icon="true">
+							<?php 
+								$this_answers = $AnswersFor2[current($Spaces[$q['id']])['id']];
+							?>
+							@foreach ($this_answers as $a)
+							<option class="option_space_{{$a['Logical']}}" value="{{$a['Logical']}}">{!! $a['Detail'] !!}</option>
+							@endforeach
+						</select>
 
-					<div class="clear"></div>
-				@endforeach
-			</ul>
+						<!-- change normal select into BS3 select manually-->
+						<script type="text/javascript">
+							$("#select_space_{{current($Spaces[$q['id']])['id']}}").selectpicker();
+						</script>
+						<?php array_shift($Spaces[$q['id']]) ?>
+						@endif
+					@endforeach
+				</div>
+			<!-- End of Điền từ -->
+			@endif
 		@endforeach
 	</ul>
+	<button class="btn btn-primary" onclick="nopBai()">Nộp bài</button>
+	<script>
+		function nopBai(){
+			checkFilledQuestions();
+		}
+	</script>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))
 		<p>Bạn đang xem {{$DisplayedQuestions . "/" . $NumOfQuestions}} câu hỏi của bài này.</p>
 		<a href="{{route('user.buy')}}" class="btn btn-info">Purchase to see full post</a>
 	@endif
+	<script type="text/javascript">
+		$('div[class="btn-group bootstrap-select"').css("width","auto");
+		function checkFilledQuestions(){
+			var setOfSpaces = {!! json_encode($SetOfSpaceIDs) !!};
+			for (var i = 0; i < setOfSpaces.length; i++) {
+				var selectObj = $('#select_space_' + setOfSpaces[i]);
+
+				// bootstrap-select will be hided; a button with data-id attribute equals to id of old bootstrap-select will be added and shown.
+				var btn = $('button[data-id="select_space_' + setOfSpaces[i] + '"]');
+				if (selectObj.val() == 1){
+					score++;
+					btn.css('background', "#66ff66");
+				}
+				else{
+					btn.css('background', "#ff5050");
+				}
+			};
+			var resultText = 'Đúng ' + score + '/' + maxScore + ' câu.\n';
+			var x = {!! $Comments !!};
+			for(var i = x.length - 1; i >= 0; i--) {
+				if (Math.floor(score / maxScore * 100) >= x[i]['min']){
+					resultText += x[i]['comment'];
+					break;
+				}
+			}
+			ob('writeResult').innerHTML = resultText;
+			ob('resultText').style.display = 'block';
+			$('html, body').animate({
+				scrollTop: $("#resultText").offset().top
+			}, 1000);
+			var setOfOptions = document.getElementsByClassName('option_space_1');
+			for (var i = 0; i < setOfOptions.length; i++) {
+				setOfOptions[i].innerHTML += ' <span class="glyphicon glyphicon-ok">';
+			}
+
+			$.ajax({
+				url: "/finishexam",
+				type: "POST",
+				beforeSend: function (xhr) {
+					var token = $('meta[name="_token"]').attr('content');
+
+					if (token) {
+						return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				data: {
+					Score:  score,
+					MaxScore: maxScore,
+					token: ob('token').value
+				},
+				success: function (data) {
+					console.log(data);
+				}, error: function (data) {
+					console.log(data);
+				}
+			}); //end of ajax
+		}
+	</script>
 	<div class="form-control" id="resultText" style="display: none; height: 200px;">
 		<b class="title" id="writeResult"></b> <br />
 	</div>

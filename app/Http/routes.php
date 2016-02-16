@@ -101,7 +101,12 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/buy', [
 		'as' => 'user.buy',
-		'uses' => 'TimesController@dm'
+		'uses' => 'PaidsController@buy'
+	]);
+
+	Route::post('/finishexam', [
+		'as' => 'count.score',
+		'uses' => 'DoexamsController@savescore'
 	]);
 
 	Route::group(['prefix' => '/admin'], function(){

@@ -15,6 +15,7 @@ use App\Doexams;
 use App\ConstsAndFuncs;
 use App\Tags;
 use App\Hashtags;
+use App\Spaces;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -90,7 +91,8 @@ class PostsController extends Controller
 			else{
 				$DisplayedQuestions = ((new \DateTime($user['expire_at'])) >= (new \DateTime())) ? -1 : $post['NoOfFreeQuestions'];
 			}
-			if ($user['admin'] == 1000){
+
+			if ($user['admin'] >= ConstsAndFuncs::PERM_ADMIN){
 				$DisplayedQuestions = -1;
 			}
 		 }
@@ -100,27 +102,45 @@ class PostsController extends Controller
 			$questions = Questions::where('PostID', '=', $postID)->take($DisplayedQuestions)->get()->toArray();
 		else
 			$questions = Questions::where('PostID', '=', $postID)->get()->toArray();
-		$bundle = array();
-		$bundleAnswer = array();
+		$AnswersFor1 = array();
+		$TrueAnswersFor1 = array();
+		$AnswersFor2 = array();
+		$Spaces = array();
+		$SetOfSpaceIDs = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
-			$answer = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
-			$bundle += array($q['id'] => $answer);
-			$bundleAnswer += [$q['id'] => AnswersController::getAnswer($q['id'])];
-			if (count($answer) > 0) $maxscore++;
+			switch ($q['FormatID']){
+				case 1:		// Trắc nghiệm
+					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					foreach ($answers as $a) {
+						if ($a['Logical'] == 1){
+							$TrueAnswersFor1 += [$q['id'] => $a['id']];
+							break;
+						}
+					}
+					$info = [$q['id'] => $answers];
+					if (count($answers) > 0)
+						$maxscore++;
+					$AnswersFor1 += $info;
+					continue;
+				case 2:		// Điền từ
+					$spaces = Spaces::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$Spaces += [$q['id'] => $spaces];
+					foreach ($spaces as $s) {
+						$SetOfSpaceIDs = array_merge($SetOfSpaceIDs, [$s['id']]);
+						$a = Answers::where('SpaceID', '=', $s['id'])->get()->toArray();
+						shuffle($a);
+						$AnswersFor2 += [$s['id'] => $a];
+					}
+					$maxscore += count($spaces);
+					continue;
+			}
 		}
 		$Comments = Comments::all()->toArray();
 		$result = array(
 			'Comments' => json_encode($Comments),
-			'Title' => $post['Title'],
-			'Description' => $post['Description'],
-			'PostID' => $postID,
-			'Thumbnail' => $post['ThumbnailID'],
 			'Questions' => $questions,
-			'Photo' => $photo,
-			'Video' => $post['Video'],
-			'Bundle' => $bundle,
-			'BundleAnswers' => $bundleAnswer,
+			'Post' => $post,
 			'MaxScore' => $maxscore,
 			'NumOfQuestions' => count($questions = Questions::where('PostID', '=', $postID)->get()->toArray()),
 			'Token' => $token,
@@ -133,8 +153,17 @@ class PostsController extends Controller
 		$newpost = array_merge($nextPost, $previousPost);
 		$result += ['newpost' => $newpost];
 		// dd($newpost);
-		// return view('viewpost')->with(compact(['result', 'newpost']));
-		return view('viewpost', $result);
+		return view('viewpost')->with($result)->with(compact([
+			'result', 
+			'newpost', 
+			// Answers for Format Trắc nghiệm
+			'AnswersFor1',
+			'TrueAnswersFor1',
+			// Spaces + Answers for Format Điền từ
+			'Spaces', 
+			'AnswersFor2',
+			'SetOfSpaceIDs',
+		]));
 	}
 
     public function addPost(){
