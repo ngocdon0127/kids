@@ -102,13 +102,21 @@ class PostsController extends Controller
 		else
 			$questions = Questions::where('PostID', '=', $postID)->get()->toArray();
 		$AnswersFor1 = array();
+		$TrueAnswersFor1 = array();
 		$AnswersFor2 = array();
 		$Spaces = array();
+		$SetOfSpaceIDs = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
 			switch ($q['FormatID']){
 				case 1:		// Trắc nghiệm
 					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					foreach ($answers as $a) {
+						if ($a['Logical'] == 1){
+							$TrueAnswersFor1 += [$q['id'] => $a['id']];
+							break;
+						}
+					}
 					$info = [$q['id'] => $answers];
 					if (count($answers) > 0)
 						$maxscore++;
@@ -118,12 +126,12 @@ class PostsController extends Controller
 					$spaces = Spaces::where('QuestionID', '=', $q['id'])->get()->toArray();
 					$Spaces += [$q['id'] => $spaces];
 					foreach ($spaces as $s) {
+						$SetOfSpaceIDs = array_merge($SetOfSpaceIDs, [$s['id']]);
 						$a = Answers::where('SpaceID', '=', $s['id'])->get()->toArray();
 						shuffle($a);
 						$AnswersFor2 += [$s['id'] => $a];
 					}
-					if (count($spaces) > 0)
-						$maxscore++;
+					$maxscore += count($spaces);
 					continue;
 			}
 		}
@@ -149,9 +157,11 @@ class PostsController extends Controller
 			'newpost', 
 			// Answers for Format Trắc nghiệm
 			'AnswersFor1',
+			'TrueAnswersFor1',
 			// Spaces + Answers for Format Điền từ
 			'Spaces', 
 			'AnswersFor2',
+			'SetOfSpaceIDs',
 		]));
 	}
 
