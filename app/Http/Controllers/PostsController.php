@@ -90,7 +90,7 @@ class PostsController extends Controller
 			else{
 				$DisplayedQuestions = ((new \DateTime($user['expire_at'])) >= (new \DateTime())) ? -1 : $post['NoOfFreeQuestions'];
 			}
-			if ($user['admin'] == 1){
+			if ($user['admin'] >= ConstsAndFuncs::PERM_ADMIN){
 				$DisplayedQuestions = -1;
 			}
 		 }
