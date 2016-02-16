@@ -56,7 +56,7 @@
 					<h4 class="modal-title">Chọn dạng câu hỏi</h4>
 				</div>
 				<div class="modal-body">
-					@foreach (App\ConstsAndFuncs::FORMATS as $k => $v)
+					@foreach (App\ConstsAndFuncs::$FORMATS as $k => $v)
 					<a class ="btn btn-primary" href="{{route('admin.addquestion', $PostID . '?FormatID=' . $k)}}">{{$v}}</a>
 					@endforeach
 				</div>

@@ -10,8 +10,8 @@ class ConstsAndFuncs
 {
 	// Constants
 	const PERM_ADMIN = 1000;
-	const THUMBNAILS = [1 => 'Photo', 2 => 'Video'];
-	const FORMATS = [
+	public static $THUMBNAILS = [1 => 'Photo', 2 => 'Video'];
+	public static $FORMATS = [
 		1 => 'Trắc nghiệm',
 		2 => 'Điền từ',
 	];
