@@ -146,6 +146,14 @@ Route::group(['middleware' => ['web']], function () {
 			'as'    => "admin.editspace",
 			'uses'  => "SpacesController@update"
 		]);
+		Route::post('/addsubquestion/{questionid}', [
+			'as'    => 'admin.addsubquestion',
+			'uses'  => 'SubQuestionsController@savesubquestion'
+		]);
+		Route::post('/editsubquestion/{questionid}', [
+			'as'    => "admin.editsubquestion",
+			'uses'  => "SubQuestionsController@update"
+		]);
 		Route::post('/addanswer/{questionid}',[
 			'as'    => 'admin.saveanswer',
 			'uses'  => 'AnswersController@saveanswer'

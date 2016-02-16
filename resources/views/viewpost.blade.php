@@ -15,7 +15,7 @@
 	<h2 class="description">{{$Post['Description']}}</h2>
 	<li class="list-group-item">
 		@if ($Post['ThumbnailID'] == 1)
-			<img class="img-responsive" alt="{{$Title . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Post['Photo']}}" />
+			<img class="img-responsive" alt="{{$Post['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Post['Photo']}}" />
 		@elseif ($Post['ThumbnailID'] == 2)
 		<div class="embed-responsive embed-responsive-4by3">
 			<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$Post['Video']}}" frameborder="0" allowfullscreen></iframe>

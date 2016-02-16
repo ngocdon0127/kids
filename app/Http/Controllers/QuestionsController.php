@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Questions;
 use App\Posts;
 use App\Spaces;
+use App\SubQuestions;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,18 +27,30 @@ class QuestionsController extends Controller
 		}
 		$Question = $Question->toArray();
 		$format = $Question['FormatID'];
-		if ($format == 1){ // Multiple-choice Question
-			$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
-			return view('viewquestion')->with(compact('Question', 'Answers'));
-		}
-		else if ($format == 2){ // Filled Question
-			$Answers = array();
-			$Spaces = Spaces::where('QuestionID', '=', $QuestionID)->get()->toArray();
-			foreach ($Spaces as $value) {
-				$Answers += array($value['id'] => Answers::where('SpaceID', '=', $value['id'])->get()->toArray());
-			}
-			// dd($Answers);
-			return view('admin.viewfilledquestion')->with(compact('Question', 'Spaces', 'Answers'));
+		switch ($format){
+			case 1:		// Multiple-choice Question
+				$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				return view('viewquestion')->with(compact('Question', 'Answers'));
+				break;
+			case 2:		// Filled Question
+				$Answers = array();
+				$Spaces = Spaces::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				foreach ($Spaces as $value) {
+					$Answers += array($value['id'] => Answers::where('SpaceID', '=', $value['id'])->get()->toArray());
+				}
+				// dd($Answers);
+				return view('admin.viewfilledquestion')->with(compact('Question', 'Spaces', 'Answers'));
+				break;
+			case 5:		// Connected Question
+				$SubQuestions = SubQuestions::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				$Answers = array();
+				foreach ($SubQuestions as $s) {
+					$Answers += [$s['id'] => Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray()];
+				}
+				return view('admin.viewconnectedquestion')->with(compact('Question', 'SubQuestions', 'Answers'));
+				break;
+			default:
+				return '1';
 		}
 		
 	}
@@ -53,6 +66,9 @@ class QuestionsController extends Controller
 					break;
 				case 2:
 					$view = 'admin.addfilledquestion';
+					break;
+				case 5:
+					$view = 'admin.addconnectedquestion';
 					break;
 				default:
 					$view = 'admin.addquestion';
@@ -126,6 +142,8 @@ class QuestionsController extends Controller
 				}
 				return view('admin.editfilledquestion', compact('Question', 'rawAnswers'));
 				break;
+			// case 5:			// Connected Question
+				// $SubQuestions = SubQuestions::where('QuestionID', '=', $id)
 		}
 		
 	}
