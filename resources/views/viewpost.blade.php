@@ -284,6 +284,23 @@
 			<!-- End of Trắc nghiệm -->
 			@elseif ($q['FormatID'] == 2)
 			<!-- Điền từ -->
+				@if ($q['ThumbnailID'] == 1)
+					@if ($q['Photo'] != null)
+						<li class="list-group-item list-group-item-info">
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						</li>
+					@endif
+				@elseif ($q['ThumbnailID'] == 2)
+					@if ($q['Video'] != null)
+						<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
+						</div>
+					@endif
+				@endif
 				<?php
 					$subP = \App\Questions::getFilledQuestion($q['Question']);
 					reset($Spaces);  // don't know what's different between this view & viewfilledquestion
@@ -314,23 +331,6 @@
 						@endif
 					@endforeach
 				</div>
-				@if ($q['ThumbnailID'] == 1)
-					@if ($q['Photo'] != null)
-						<li class="list-group-item list-group-item-info">
-							@if ((auth()->user()) && (auth()->user()->admin == 1))
-								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
-							@else
-								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
-							@endif
-						</li>
-					@endif
-				@elseif ($q['ThumbnailID'] == 2)
-					@if ($q['Video'] != null)
-						<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
-						</div>
-					@endif
-				@endif
 			<!-- End of Điền từ -->
 			@endif
 		@endforeach
