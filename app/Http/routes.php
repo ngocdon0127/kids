@@ -104,6 +104,11 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'PaidsController@buy'
 	]);
 
+	Route::post('/finishexam', [
+		'as' => 'count.score',
+		'uses' => 'DoexamsController@savescore'
+	]);
+
 	Route::group(['prefix' => '/admin'], function(){
 		Route::get ('/addquestion/{postid}',[
 			'as'    => 'admin.addquestion',
