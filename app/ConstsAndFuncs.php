@@ -14,6 +14,7 @@ class ConstsAndFuncs
 	public static $FORMATS = [
 		1 => 'Trắc nghiệm',
 		2 => 'Điền từ',
+		3 => 'Sắp xếp',
 	];
 	public static $FreeQuestionsForCrawler = 5;
 

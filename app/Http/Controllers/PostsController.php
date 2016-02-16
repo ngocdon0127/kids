@@ -47,7 +47,7 @@ class PostsController extends Controller
 				(stripos($_SERVER["HTTP_USER_AGENT"], 'google') === false)
 			){
 				$redirectPath = '/post/' . $postID;
-				return redirect('/auth/login')->with('redirectPath', $redirectPath);
+				return redirect('/login')->with('redirectPath', $redirectPath);
 			}
 			$token = md5(rand(), false);
 			$DisplayedQuestions = ConstsAndFuncs::$FreeQuestionsForCrawler;
@@ -90,7 +90,7 @@ class PostsController extends Controller
 			else{
 				$DisplayedQuestions = ((new \DateTime($user['expire_at'])) >= (new \DateTime())) ? -1 : $post['NoOfFreeQuestions'];
 			}
-			if ($user['admin'] == 1){
+			if ($user['admin'] == 1000){
 				$DisplayedQuestions = -1;
 			}
 		 }
@@ -141,7 +141,7 @@ class PostsController extends Controller
 //        $courses = Courses::all();
 //        $courses->toArray();
 		if (!AuthController::checkPermission()){
-			return redirect('auth/login');
+			return redirect('/login');
 		}
 		return view('admin.addpost');
 	}

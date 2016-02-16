@@ -99,6 +99,11 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'TimesController@trackip'
 	]);
 
+	Route::get('/buy', [
+		'as' => 'user.buy',
+		'uses' => 'TimesController@dm'
+	]);
+
 	Route::group(['prefix' => '/admin'], function(){
 		Route::get ('/addquestion/{postid}',[
 			'as'    => 'admin.addquestion',

@@ -38,13 +38,16 @@ class QuestionsController extends Controller
 			}
 			// dd($Answers);
 			return view('admin.viewfilledquestion')->with(compact('Question', 'Spaces', 'Answers'));
-		}
-		
+			}
+			else if ($format == 3){ // Aranged Question
+				$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				return view('admin.viewarangedquestion')->with(compact('Question', 'Answers'));
+			}
 	}
 
 	public function addQuestion($PostID){
 		if (!AuthController::checkPermission()){
-			return redirect('auth/login');
+			return redirect('/login');
 		};
 		if (array_key_exists('FormatID', $_GET)){
 			switch ($_GET['FormatID']) {
@@ -53,6 +56,9 @@ class QuestionsController extends Controller
 					break;
 				case 2:
 					$view = 'admin.addfilledquestion';
+					break;
+				case 3:
+					$view = 'admin.addarangedquestion';
 					break;
 				default:
 					$view = 'admin.addquestion';
@@ -70,13 +76,13 @@ class QuestionsController extends Controller
 			return redirect('/');
 		}
 		$data = Request::capture();
-		// var_dump($data);
 		$question = new Questions();
 		$question->PostID = $PostID;
 		$question->ThumbnailID = $data['ThumbnailID'];
 		$question->Question = $data['Question'];
 		$question->Description = $data['Description'];
 		$question->FormatID = $data['FormatID'];
+		$a = $data['Answer'];
 		switch ($data['ThumbnailID']){
 			case '1': // Photo
 				$question->save();
@@ -96,6 +102,16 @@ class QuestionsController extends Controller
 				$question->Video = PostsController::getYoutubeVideoID($linkVideo);
 				$question->save();
 				break;
+		}
+		// var_dump($data);
+
+
+		if ($question->FormatID == '3') {
+
+			$answer = new Answers();
+			$answer->Detail = $a;
+			$answer->QuestionID = $question->id;
+			$answer->save();
 		}
 		echo $question->id;
 		return;
@@ -126,6 +142,9 @@ class QuestionsController extends Controller
 				}
 				return view('admin.editfilledquestion', compact('Question', 'rawAnswers'));
 				break;
+				case 3:
+					return view('admin.editarangedquestion', compact('Question'));
+					break;
 		}
 		
 	}
@@ -178,7 +197,7 @@ class QuestionsController extends Controller
 		@unlink(public_path('images/imageQuestion/' . $question['Photo']));
 		$postid = $question['PostID'];
 		$format = $question['FormatID'];
-		if ($format == 1){
+		if ($format == 1 || $format == 3){
 			$answers = Answers::where('QuestionID', '=', $id)->get()->toArray();
 			foreach ($answers as $answer) {
 				Answers::destroy($answer['id']);
