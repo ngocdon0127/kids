@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('head.title')
-	{{$Title}} - Evangels English
+	{{$Post['Title']}} - Evangels English
 @endsection
 @section('body.content')
 	<div id="fb-root"></div>
@@ -11,19 +11,19 @@
 	js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1657402167852948";
 	fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
-	<h2 class="title">{{$Title}}</h2>
-	<h2 class="description">{{$Description}}</h2>
+	<h2 class="title">{{$Post['Title']}}</h2>
+	<h2 class="description">{{$Post['Description']}}</h2>
 	<li class="list-group-item">
-		@if ($Thumbnail == 1)
-			<img class="img-responsive" alt="{{$Title . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Photo}}" />
-		@elseif ($Thumbnail == 2)
+		@if ($Post['ThumbnailID'] == 1)
+			<img class="img-responsive" alt="{{$Title . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Post['Photo']}}" />
+		@elseif ($Post['ThumbnailID'] == 2)
 		<div class="embed-responsive embed-responsive-4by3">
-			<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$Video}}" frameborder="0" allowfullscreen></iframe>
+			<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$Post['Video']}}" frameborder="0" allowfullscreen></iframe>
 		</div>
 		@endif
 	</li>
 	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
-		<a class ="col-xs-12 btn btn-primary" href="{{route('post.edit', $PostID)}}">Sửa thông tin bài đăng</a>
+		<a class ="col-xs-12 btn btn-primary" href="{{route('post.edit', $Post['id'])}}">Sửa thông tin bài đăng</a>
 		<a class="col-xs-12 btn btn-primary" data-toggle="modal" href='#modal-add-question'>Thêm câu hỏi</a>
 
 		<a class="col-xs-12 btn btn-danger" data-toggle="modal" href='#modal-id'>Xóa bài đăng này</a>
@@ -39,7 +39,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<a class ="btn btn-primary" href="{{route('admin.destroypost',$PostID)}}">Xóa</a>
+						<a class ="btn btn-primary" href="{{route('admin.destroypost',$Post['id'])}}">Xóa</a>
 					</div>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
 				</div>
 				<div class="modal-body">
 					@foreach (App\ConstsAndFuncs::$FORMATS as $k => $v)
-					<a class ="btn btn-primary" href="{{route('admin.addquestion', $PostID . '?FormatID=' . $k)}}">{{$v}}</a>
+					<a class ="btn btn-primary" href="{{route('admin.addquestion', $Post['id'] . '?FormatID=' . $k)}}">{{$v}}</a>
 					@endforeach
 				</div>
 				<div class="modal-footer">
@@ -68,103 +68,100 @@
 	</div>
 	
 	<script type="text/javascript" charset="UTF-8">
-		var score = 0;
-		var fill = 0;
-		var maxScore = {{$MaxScore}};
-		function ob(x){
-			return document.getElementById(x);
-		}
-		var numQuestion = {!! count($Questions) !!};
-		function check(questionID, answerID, trueAnswerID, nextQuestionID){
-			console.log('start');
-			var date = new Date();
-			var id = 'radio_answer_' + questionID + '_' + answerID;
-			ob(id).checked = true;
-			var id = 'answer_' + questionID + '_' + answerID;
+// 		var score = 0;
+// 		var fill = 0;
+// 		var maxScore = {{$MaxScore}};
+// 		function ob(x){
+// 			return document.getElementById(x);
+// 		}
+// 		var numQuestion = {!! count($Questions) !!};
+// 		function check(questionID, answerID, trueAnswerID, nextQuestionID){
+// 			console.log('start');
+// 			var date = new Date();
+// 			var id = 'radio_answer_' + questionID + '_' + answerID;
+// 			ob(id).checked = true;
+// 			var id = 'answer_' + questionID + '_' + answerID;
 
-//                ob(id).disabled = true;
-			var setOfRadio = document.getElementsByName('question_' + questionID);
-			for(i = 0; i < setOfRadio.length; i++){
-				setOfRadio[i].disabled = true;
-			}
+// //                ob(id).disabled = true;
+// 			var setOfRadio = document.getElementsByName('question_' + questionID);
+// 			for(i = 0; i < setOfRadio.length; i++){
+// 				setOfRadio[i].disabled = true;
+// 			}
 
-			var setLi = document.getElementById('ul_question_' + questionID).children;
-			for(i = 0; i < setLi.length; i++){
-				var li = setLi[i];
-				li.setAttribute('onclick', '');
-				li.style.cursor = 'no-drop';
-			}
+// 			var setLi = document.getElementById('ul_question_' + questionID).children;
+// 			for(i = 0; i < setLi.length; i++){
+// 				var li = setLi[i];
+// 				li.setAttribute('onclick', '');
+// 				li.style.cursor = 'no-drop';
+// 			}
 
-			console.log('receive');
-			var date1 = new Date();
-			console.log(date1.getTime() - date.getTime())
-//                        ob('answer_' + questionID + '_' + answerID).innerHTML = obj.responseText;
+// 			console.log('receive');
+// 			var date1 = new Date();
+// 			console.log(date1.getTime() - date.getTime())
+// //                        ob('answer_' + questionID + '_' + answerID).innerHTML = obj.responseText;
 
-//                var xml = jQuery.parseXML(obj.responseText);
-//                        console.log(xml.getElementsByTagName('logical')[0].innerHTML);
-			if (answerID == trueAnswerID) {
-				ob(id).style.background = '#66ff66';
-				score++;
-			}
-			else {
-				ob(id).style.background = '#ff5050';
-			}
-			var idTrue = 'answer_' + questionID + '_' + trueAnswerID;
-			ob(idTrue).style.background = '#66ff66';
-			fill++;
-			if (fill >= maxScore){
+// //                var xml = jQuery.parseXML(obj.responseText);
+// //                        console.log(xml.getElementsByTagName('logical')[0].innerHTML);
+// 			if (answerID == trueAnswerID) {
+// 				ob(id).style.background = '#66ff66';
+// 				score++;
+// 			}
+// 			else {
+// 				ob(id).style.background = '#ff5050';
+// 			}
+// 			var idTrue = 'answer_' + questionID + '_' + trueAnswerID;
+// 			ob(idTrue).style.background = '#66ff66';
+// 			fill++;
+// 			if (fill >= maxScore){
 
-				var resultText = 'Đúng ' + score + '/' + maxScore + ' câu.\n';
-				var x = {!! $Comments !!};
-				for(var i = x.length - 1; i >= 0; i--) {
-					if (Math.floor(score / maxScore * 100) >= x[i]['min']){
-						resultText += x[i]['comment'];
-						break;
-					}
-				}
-				ob('writeResult').innerHTML = resultText;
-				ob('resultText').style.display = 'block';
-				$('html, body').animate({
-					scrollTop: $("#resultText").offset().top
-				}, 1000);
+// 				var resultText = 'Đúng ' + score + '/' + maxScore + ' câu.\n';
+// 				var x = {!! $Comments !!};
+// 				for(var i = x.length - 1; i >= 0; i--) {
+// 					if (Math.floor(score / maxScore * 100) >= x[i]['min']){
+// 						resultText += x[i]['comment'];
+// 						break;
+// 					}
+// 				}
+// 				ob('writeResult').innerHTML = resultText;
+// 				ob('resultText').style.display = 'block';
+// 				$('html, body').animate({
+// 					scrollTop: $("#resultText").offset().top
+// 				}, 1000);
 
-				// console.log('diem: ' + score);
-				// save result using AJAX
-				$.ajax({
-					url: "/finishexam",
-					type: "POST",
-					beforeSend: function (xhr) {
-						var token = $('meta[name="_token"]').attr('content');
+// 				// console.log('diem: ' + score);
+// 				// save result using AJAX
+// 				$.ajax({
+// 					url: "/finishexam",
+// 					type: "POST",
+// 					beforeSend: function (xhr) {
+// 						var token = $('meta[name="_token"]').attr('content');
 
-						if (token) {
-							return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-						}
-					},
-					data: {
-						Score:  score,
-						MaxScore: maxScore,
-						token: ob('token').value
-					},
-					success: function (data) {
-						console.log(data);
-					}, error: function (data) {
-						console.log(data);
-					}
-				}); //end of ajax
+// 						if (token) {
+// 							return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+// 						}
+// 					},
+// 					data: {
+// 						Score:  score,
+// 						MaxScore: maxScore,
+// 						token: ob('token').value
+// 					},
+// 					success: function (data) {
+// 						console.log(data);
+// 					}, error: function (data) {
+// 						console.log(data);
+// 					}
+// 				}); //end of ajax
 
-			}
-			else{
-				var delayToNextQuestion = 500;      // Time for user review current question.
-				var timeScrollToNextQuestion = 300;
-				setTimeout(function() {
-					$('html, body').animate({
-						scrollTop: $("#title_question_" + nextQuestionID).offset().top
-					}, timeScrollToNextQuestion);
-				}, delayToNextQuestion);
-			}
-//                obj.open('GET', '/ajax/checkanswer/' + questionID + '/' + answerID, true);
-//                ob.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//                obj.send();
+// 			}
+// 			else{
+// 				var delayToNextQuestion = 500;      // Time for user review current question.
+// 				var timeScrollToNextQuestion = 300;
+// 				setTimeout(function() {
+// 					$('html, body').animate({
+// 						scrollTop: $("#title_question_" + nextQuestionID).offset().top
+// 					}, timeScrollToNextQuestion);
+// 				}, delayToNextQuestion);
+// 			}
 
 		}
 
@@ -251,6 +248,9 @@
 			@else
 			<h3 class="title" id="title_question_{!! $key + 1 !!}">Câu hỏi số <?php echo $count_answer++; ?>:</h3>
 			@endif
+
+			<!-- Trắc nghiệm -->
+			@if ($q['FormatID'] == 1)
 			<h4 class="title">{!! nl2br($q['Question']) . ((strlen($q['Description']) > 0) ? (" :<br /><br /> " . nl2br($q['Description'])) : "") !!}</h4>
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
@@ -271,8 +271,8 @@
 				@endif
 			
 			<ul class="list-group" id="ul_question_{{$q['id']}}">
-				@foreach($Bundle[$q['id']] as $k => $a)
-					<li id="answer_{{$q['id']}}_{{$a['id']}}" class="list_answer"  onclick="check({{$q['id']}}, {{$a['id']}}, {{$BundleAnswers[$q['id']]}}, {!! $key + 2 !!})" style="cursor: pointer">
+				@foreach($AnswersFor1[$q['id']] as $k => $a)
+					<li id="answer_{{$q['id']}}_{{$a['id']}}" class="list_answer"  onclick="check({{$q['id']}}, {{$a['id']}}, {{ $a['Logical'] == 1 ? 1 : 0}}, {!! $key + 2 !!})" style="cursor: pointer">
 						<input type="checkbox" id="radio_answer_{{$q['id']}}_{{$a['id']}}" name="question_{{$q['id']}}"/>
 						<span class="answer_content">{!! \App\Http\Controllers\AnswersController::underline($a['Detail']) !!}</span>
 					</li>
@@ -280,6 +280,41 @@
 					<div class="clear"></div>
 				@endforeach
 			</ul>
+			<!-- End of Trắc nghiệm -->
+			@elseif ($q['FormatID'] == 2)
+			<!-- Điền từ -->
+			<?php
+				$subP = \App\Questions::getFilledQuestion($q['Question']);
+				reset($Spaces);  // don't know what's different between this view & viewfilledquestion
+			?>
+			<div style="color:#cc0066; font-weight:bold;">
+			@if (strlen($q['Description']) > 0)
+				{!! nl2br($q['Description']) . ":" !!}
+			@endif
+			</div>
+			<div>
+				@foreach ($subP as $value)
+					{!! nl2br($value) !!}
+					@if (count($Spaces[$q['id']]) > 0)
+					<select style="color:#cc0066" id="select_space_{{current($Spaces[$q['id']])['id']}}" data-show-icon="true">
+						<?php 
+							$this_answers = $AnswersFor2[current($Spaces[$q['id']])['id']];
+						?>
+						@foreach ($this_answers as $a)
+						<option class="option_space_{{$a['Logical']}}" value="{{$a['Logical']}}">{!! $a['Detail'] !!}</option>
+						@endforeach
+					</select>
+
+					<!-- change normal select into BS3 select manually-->
+					<script type="text/javascript">
+						$("#select_space_{{current($Spaces[$q['id']])['id']}}").selectpicker();
+					</script>
+					<?php array_shift($Spaces[$q['id']]) ?>
+					@endif
+				@endforeach
+			</div>
+			<!-- End of Điền từ -->
+			@endif
 		@endforeach
 	</ul>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))

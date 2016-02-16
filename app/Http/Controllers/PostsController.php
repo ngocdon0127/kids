@@ -15,6 +15,7 @@ use App\Doexams;
 use App\ConstsAndFuncs;
 use App\Tags;
 use App\Hashtags;
+use App\Spaces;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -47,7 +48,7 @@ class PostsController extends Controller
 				(stripos($_SERVER["HTTP_USER_AGENT"], 'google') === false)
 			){
 				$redirectPath = '/post/' . $postID;
-				return redirect('/auth/login')->with('redirectPath', $redirectPath);
+				//return redirect('/login')->with('redirectPath', $redirectPath);
 			}
 			$token = md5(rand(), false);
 			$DisplayedQuestions = ConstsAndFuncs::$FreeQuestionsForCrawler;
@@ -100,27 +101,37 @@ class PostsController extends Controller
 			$questions = Questions::where('PostID', '=', $postID)->take($DisplayedQuestions)->get()->toArray();
 		else
 			$questions = Questions::where('PostID', '=', $postID)->get()->toArray();
-		$bundle = array();
-		$bundleAnswer = array();
+		$AnswersFor1 = array();
+		$AnswersFor2 = array();
+		$Spaces = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
-			$answer = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
-			$bundle += array($q['id'] => $answer);
-			$bundleAnswer += [$q['id'] => AnswersController::getAnswer($q['id'])];
-			if (count($answer) > 0) $maxscore++;
+			switch ($q['FormatID']){
+				case 1:		// Trắc nghiệm
+					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$info = [$q['id'] => $answers];
+					if (count($answers) > 0)
+						$maxscore++;
+					$AnswersFor1 += $info;
+					continue;
+				case 2:		// Điền từ
+					$spaces = Spaces::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$Spaces += [$q['id'] => $spaces];
+					foreach ($spaces as $s) {
+						$a = Answers::where('SpaceID', '=', $s['id'])->get()->toArray();
+						shuffle($a);
+						$AnswersFor2 += [$s['id'] => $a];
+					}
+					if (count($spaces) > 0)
+						$maxscore++;
+					continue;
+			}
 		}
 		$Comments = Comments::all()->toArray();
 		$result = array(
 			'Comments' => json_encode($Comments),
-			'Title' => $post['Title'],
-			'Description' => $post['Description'],
-			'PostID' => $postID,
-			'Thumbnail' => $post['ThumbnailID'],
 			'Questions' => $questions,
-			'Photo' => $photo,
-			'Video' => $post['Video'],
-			'Bundle' => $bundle,
-			'BundleAnswers' => $bundleAnswer,
+			'Post' => $post,
 			'MaxScore' => $maxscore,
 			'NumOfQuestions' => count($questions = Questions::where('PostID', '=', $postID)->get()->toArray()),
 			'Token' => $token,
@@ -133,8 +144,15 @@ class PostsController extends Controller
 		$newpost = array_merge($nextPost, $previousPost);
 		$result += ['newpost' => $newpost];
 		// dd($newpost);
-		// return view('viewpost')->with(compact(['result', 'newpost']));
-		return view('viewpost', $result);
+		return view('viewpost')->with($result)->with(compact([
+			'result', 
+			'newpost', 
+			// Answers for Format Trắc nghiệm
+			'AnswersFor1',
+			// Spaces + Answers for Format Điền từ
+			'Spaces', 
+			'AnswersFor2',
+		]));
 	}
 
     public function addPost(){
