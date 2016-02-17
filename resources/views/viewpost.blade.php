@@ -398,7 +398,7 @@
 			@endif
 			@if($q['FormatID'] == 4)
 			<!-- Điền chữ cái -->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0; margin-bottom: 20px">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="border: #ecf0f1 solid 1px;">
 						<h2 class="title">{{$q['Question']}}</h2>
 						<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
