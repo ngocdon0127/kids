@@ -113,6 +113,10 @@ class PostsController extends Controller
 		$QuestionFor5IDs = array();
 		$AnswersFor6 = array();
 		$DragDropIDs = array();
+		$AnswersFor3 = array();
+		$AnswersFor4 = array();
+		$FillCharacterIDs = array();
+		$ArrangedIDs = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
 			switch ($q['FormatID']){
@@ -140,11 +144,23 @@ class PostsController extends Controller
 					}
 					$maxscore += count($spaces);
 					continue;
+				case 3:
+					$answer = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$AnswersFor3 += [$q['id'] => $answer[0]];
+					$ArrangedIDs = array_merge($ArrangedIDs, [$q['id']]);
+					$maxscore++;
+					continue;
+				case 4:
+					$answer = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$AnswersFor4 += [$q['id'] => $answer[0]];
+					$FillCharacterIDs = array_merge($FillCharacterIDs, [$q['id']]);
+					$maxscore++;
+					continue;
 				case 5:		// Nối
 					$subquestions = Subquestions::where('QuestionID', '=', $q['id'])->get()->toArray();
 					$answer = array();
 					foreach ($subquestions as $s) {
-						$a = Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray();	
+						$a = Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray();
 						$answer += [$s['id'] => $a[0]];
 					}
 					$AnswersFor5 += [$q['id'] => $answer];
@@ -183,10 +199,16 @@ class PostsController extends Controller
 			// Answers for Format Trắc nghiệm
 			'AnswersFor1',
 			'TrueAnswersFor1',
+			// Answers for Format Sắp xếp
+			'AnswersFor3',
+			'ArrangedIDs',
 			// Spaces + Answers for Format Điền từ
 			'Spaces', 
 			'AnswersFor2',
 			'SetOfSpaceIDs',
+			// Answers for Format Điền chữ cái
+			'AnswersFor4',
+			'FillCharacterIDs',
 			// Subquestion + Answers for Format Nối
 			'subquestions',
 			'AnswersFor5',

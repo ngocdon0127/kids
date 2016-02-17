@@ -143,6 +143,7 @@ class QuestionsController extends Controller
 			$answer = new Answers();
 			$answer->Detail = $a;
 			$answer->QuestionID = $question->id;
+			$answer->Logical = 1;
 			$answer->save();
 		}
 		echo $question->id;

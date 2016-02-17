@@ -301,6 +301,7 @@
 			<!-- End of Điền từ -->
 			@elseif ($q['FormatID'] == 5)
 			<!-- Nối -->
+			<h4 class="title">{!! nl2br($q['Question']) . ((strlen($q['Description']) > 0) ? (" :<br /><br /> " . nl2br($q['Description'])) : "") !!}</h4>
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
@@ -351,6 +352,7 @@
 			<!-- End of Nối -->
 			@elseif ($q['FormatID'] == 6)
 			<!-- Kéo thả -->
+			<h4 class="title">{!! nl2br($q['Question']) . ((strlen($q['Description']) > 0) ? (" :<br /><br /> " . nl2br($q['Description'])) : "") !!}</h4>
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
@@ -378,6 +380,7 @@
 			@endif
 
 			@if($q['FormatID'] == 3)
+			<!-- Sắp xếp -->
 				<h3>{{$q['Question']}}</h3>
 				@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
@@ -389,13 +392,17 @@
 						</li>
 					@endif
 					<h4>Nhập câu trả lời:</h4>
-				<input type="text" name="" id="{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
+				<input type="text" id="input_arranged_{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
+				<input type="hidden" id="answer_arranged_{{$q['id']}}" value="{{$AnswersFor3[$q['id']]['Detail']}}" />
+			<!-- End of Sắp xếp -->
 			@endif
 			@if($q['FormatID'] == 4)
+			<!-- Điền chữ cái -->
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="border: #ecf0f1 solid 1px;">
 						<h2 class="title">{{$q['Question']}}</h2>
-						<input type="text" name="" id="{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">				
+						<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
+						<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 						@if ($q['Photo'] != null)
@@ -405,8 +412,9 @@
 									<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
 								@endif
 						@endif
-					</div>							
+					</div>
 				</div>
+			<!-- End of Điền chữ cái -->
 			@endif
 		@endforeach
 	</ul>
@@ -416,6 +424,8 @@
 			checkFilledQuestions();
 			checkConnectedQuestions();
 			checkDragDropQuestions();
+			checkArrangedQuestions();
+			checkFillCharacterQuestions();
 			submitResult();
 		}
 	</script>
@@ -501,6 +511,38 @@
 				for (var i = 0; i < ulDragDrop.children.length; i++) {
 					ulDragDrop.children[i].style.background = c;
 				};
+			}
+		}
+
+		function checkArrangedQuestions() {
+			var setOfArrangedIDs = {!! json_encode($ArrangedIDs) !!};
+			for (var i = 0; i < setOfArrangedIDs.length; i++) {
+				var input = ob('input_arranged_' + setOfArrangedIDs[i]);
+				var answer = ob('answer_arranged_' + setOfArrangedIDs[i]);
+				if (input.value.trim().toUpperCase() == answer.value.trim().toUpperCase()){
+					score++;
+					input.style.background = '#66ff66';
+				}
+				else{
+					input.style.background = '#ff5050';
+					input.value += ' => ' + answer.value.trim();
+				}
+			}
+		}
+
+		function checkFillCharacterQuestions() {
+			var setOfArrangedIDs = {!! json_encode($FillCharacterIDs) !!};
+			for (var i = 0; i < setOfArrangedIDs.length; i++) {
+				var input = ob('input_fillcharacter_' + setOfArrangedIDs[i]);
+				var answer = ob('answer_fillcharacter_' + setOfArrangedIDs[i]);
+				if (input.value.trim().toUpperCase() == answer.value.trim().toUpperCase()){
+					score++;
+					input.style.background = '#66ff66';
+				}
+				else{
+					input.style.background = '#ff5050';
+					input.value += ' => ' + answer.value.trim();
+				}
 			}
 		}
 
