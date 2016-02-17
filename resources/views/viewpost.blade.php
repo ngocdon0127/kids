@@ -401,10 +401,10 @@
 						</div>
 					@endif
 				@endif
-				<ul>
+				<ul id="ul_subquestions_{{$q['id']}}" class="sortable" style="margin-top: 20px">
 					<?php shuffle($AnswersFor6[$q['id']]) ?>
 					@foreach($AnswersFor6[$q['id']] as $a)
-						<li id="li_dragdrop_{{$a['id']}}">{{$a['Detail']}}</li>
+						<li id="li_dragdrop_{{$a['id']}}" class="ui-state-default li-dragdrop form-control">{{$a['Detail']}}</li>
 					@endforeach
 				</ul>
 			<!-- End of Kéo thả -->
@@ -554,6 +554,14 @@
 		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 		.li-connected {
 			height: 75px;
+			cursor: pointer;
+		}
+		.li-dragdrop{
+			list-style-type: none;
+			margin: 20;
+			padding: 20;
+			width: auto;
+			display: inline;
 			cursor: pointer;
 		}
 	</style>
