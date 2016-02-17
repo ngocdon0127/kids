@@ -356,7 +356,7 @@
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<ul id="ul_subquestions_{{$q['id']}}" class="sortable">
 								@foreach($subquestions as $s)
-									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default form-control">{{$s['Question']}}</li>
+									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected form-control">{{$s['Question']}}</li>
 								@endforeach
 							</ul>
 					</div>
@@ -364,7 +364,7 @@
 						<ul class="sortable">
 							<?php shuffle($AnswersFor5) ?>
 							@foreach($AnswersFor5 as $s)
-								<li class="ui-state-default form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
+								<li class="ui-state-default li-connected form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
 							@endforeach
 						</ul>
 					</div>
@@ -551,7 +551,11 @@
 	<script src="/js/jquery/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
 	<script>$('.sortable').draggable();</script>
 	<style>
-		sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+		.li-connected {
+			height: 75px;
+			cursor: pointer;
+		}
 	</style>
 	<script>
 		jQuery(function() {
