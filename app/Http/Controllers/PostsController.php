@@ -141,6 +141,7 @@ class PostsController extends Controller
 						$a = Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray();	
 						$AnswersFor5 += [$s['id'] => $a[0]];
 					}
+					$maxscore += count($subquestions);
 					continue;
 			}
 		}

@@ -352,11 +352,30 @@
 					@endif
 				@endif
 
-				<ul>
-				@foreach($subquestions as $s)
-					<li>{{$s['Question']}} {{$AnswersFor5[$s['id']]['Detail']}}</li>
+				<div data-role="content" data-theme="c">
+					<ul id="ul_subquestions_{{$q['id']}}" data-role="listview" data-inset="true" data-theme="d" class="sortable">
+					@foreach($subquestions as $s)
+						<li id="li_subquestion_{{$s['id']}}">{{$s['Question']}}</li>
+					@endforeach
+					</ul>
+				</div>
+				<ul data-role="listview" data-inset="true" data-theme="d" class="sortable ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-d ui-sortable">
+				<?php shuffle($AnswersFor5) ?>
+				@foreach($AnswersFor5 as $s)
+					<li class="ui-li-static ui-body-inherit" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
 				@endforeach
 				</ul>
+				<!--<script type="text/javascript" src="/js/jquery/jquery.mobile-1.4.5.min.js"></script>-->
+				<script>
+					$(document).bind('pageinit', function() {
+						$( ".sortable" ).sortable();
+						$( ".sortable" ).disableSelection();
+						<!-- Refresh list to the end of sort to have a correct display -->
+						$( ".sortable" ).bind( "sortstop", function(event, ui) {
+							$('.sortable').listview('refresh');
+						});
+					});
+				</script>
 			<!-- End of Nối -->
 			@endif
 		@endforeach
@@ -365,6 +384,7 @@
 	<script>
 		function nopBai(){
 			checkFilledQuestions();
+			checkConnectedQuestions();
 		}
 	</script>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))
@@ -427,6 +447,10 @@
 					console.log(data);
 				}
 			}); //end of ajax
+		}
+
+		function checkConnectedQuestions() {
+			
 		}
 	</script>
 	<div class="form-control" id="resultText" style="display: none; height: 200px;">
