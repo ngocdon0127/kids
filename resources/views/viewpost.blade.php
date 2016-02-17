@@ -370,12 +370,13 @@
 						</div>
 					@endif
 				@endif
-				<ul id="ul_dragdrop_{{$q['id']}}" class="sortable" style="margin-top: 20px">
+				<ul id="ul_dragdrop_{{$q['id']}}" class="sortable" style="margin-top: 20px; margin-bottom: 20px">
 					<?php shuffle($AnswersFor6[$q['id']]) ?>
 					@foreach($AnswersFor6[$q['id']] as $a)
 						<li id="li_dragdrop_{{$a['id']}}" class="ui-state-default li-dragdrop form-control">{{$a['Detail']}}</li>
 					@endforeach
 				</ul>
+				<input type="hidden" id="answer_dragdrop_{{$q['id']}}" style="color: #933; font-weight: bold;" class="form-control" value="{{$CompleteAnswersFor6[$q['id']]}}" />
 			<!-- End of Kéo thả -->
 			@endif
 
@@ -400,11 +401,11 @@
 			<!-- Điền chữ cái -->
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0; margin-bottom: 20px">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="border: #ecf0f1 solid 1px;">
-						<h2 class="title">{{$q['Question']}}</h2>
+						<h2 class="title" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
 						<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
 						<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0">
 						@if ($q['Photo'] != null)
 								@if ((auth()->user()) && (auth()->user()->admin == 1))
 									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
@@ -508,6 +509,9 @@
 					score++;
 					c = '#66ff66';
 				}
+				else{
+					ob('answer_dragdrop_' + setOfDragDropQuestions[i]).setAttribute('type', 'text');
+				}
 				for (var i = 0; i < ulDragDrop.children.length; i++) {
 					ulDragDrop.children[i].style.background = c;
 				};
@@ -541,7 +545,8 @@
 				}
 				else{
 					input.style.background = '#ff5050';
-					input.value += ' => ' + answer.value.trim();
+					// input.value += ' => ' + answer.value.trim();
+					ob('h2_fillcharacter_' + setOfArrangedIDs[i]).innerHTML = answer.value.trim();
 				}
 			}
 		}

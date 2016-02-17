@@ -113,6 +113,7 @@ class PostsController extends Controller
 		$QuestionFor5IDs = array();
 		$AnswersFor6 = array();
 		$DragDropIDs = array();
+		$CompleteAnswersFor6 = array();
 		$AnswersFor3 = array();
 		$AnswersFor4 = array();
 		$FillCharacterIDs = array();
@@ -172,6 +173,12 @@ class PostsController extends Controller
 					$DragDropIDs = array_merge($DragDropIDs, [$q['id']]);
 					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
 					$AnswersFor6 += [$q['id'] => $answers];
+					$s = '';
+					foreach ($answers as $a) {
+						$s .= $a['Detail'] . ' ';
+					}
+					$CompleteAnswersFor6 += [$q['id'] => $s];
+					// $CompleteAnswersFor6 = array_merge($CompleteAnswersFor6, [$s]);
 					$maxscore++;
 					continue;
 			}
@@ -217,6 +224,7 @@ class PostsController extends Controller
 			// Answers for Format Kéo thả
 			'AnswersFor6',
 			'DragDropIDs',
+			'CompleteAnswersFor6',
 		]));
 	}
 

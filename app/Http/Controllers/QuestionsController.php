@@ -22,6 +22,9 @@ class QuestionsController extends Controller
 	protected static $imageQuestionPath = '/public/images/imageQuestion/';
 
 	public function viewQuestion($QuestionID){
+		if (!AuthController::checkPermission()){
+			return redirect('/');
+		}
 		$Question = Questions::find($QuestionID);
 		if (count($Question) < 1){
 			return view('errors.404');
