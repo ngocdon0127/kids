@@ -351,31 +351,25 @@
 						</div>
 					@endif
 				@endif
-
-				<div data-role="content" data-theme="c">
-					<ul id="ul_subquestions_{{$q['id']}}" data-role="listview" data-inset="true" data-theme="d" class="sortable">
-					@foreach($subquestions as $s)
-						<li id="li_subquestion_{{$s['id']}}">{{$s['Question']}}</li>
-					@endforeach
-					</ul>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px;">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<ul id="ul_subquestions_{{$q['id']}}" class="sortable">
+								@foreach($subquestions as $s)
+									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default form-control">{{$s['Question']}}</li>
+								@endforeach
+							</ul>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<ul class="sortable">
+							<?php shuffle($AnswersFor5) ?>
+							@foreach($AnswersFor5 as $s)
+								<li class="ui-state-default form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
+							@endforeach
+						</ul>
+					</div>
+					</div>
 				</div>
-				<ul data-role="listview" data-inset="true" data-theme="d" class="sortable ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-d ui-sortable">
-				<?php shuffle($AnswersFor5) ?>
-				@foreach($AnswersFor5 as $s)
-					<li class="ui-li-static ui-body-inherit" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
-				@endforeach
-				</ul>
-				<!--<script type="text/javascript" src="/js/jquery/jquery.mobile-1.4.5.min.js"></script>-->
-				<script>
-					$(document).bind('pageinit', function() {
-						$( ".sortable" ).sortable();
-						$( ".sortable" ).disableSelection();
-						<!-- Refresh list to the end of sort to have a correct display -->
-						$( ".sortable" ).bind( "sortstop", function(event, ui) {
-							$('.sortable').listview('refresh');
-						});
-					});
-				</script>
 			<!-- End of Nối -->
 			@endif
 		@endforeach
@@ -508,4 +502,20 @@
 		@endforeach
 		</div>
 	</div>
+@endsection
+@section('head.css')
+	<link rel="stylesheet" href="/js/jquery/jquery-ui.css">
+  	<script src="/js/jquery/jquery.js"></script>
+  	<script src="/js/jquery/jquery-ui.min.js"></script>
+  	<script src="/js/jquery/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+  	<script>$('.sortable').draggable();</script>
+  	<style>
+	  .sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  	</style>
+	<script>
+	  $(function() {
+	    $( ".sortable" ).sortable();
+	    $( ".sortable" ).disableSelection();
+	  });
+	</script>
 @endsection
