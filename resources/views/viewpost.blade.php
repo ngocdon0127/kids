@@ -15,7 +15,7 @@
 	<h2 class="description">{{$Post['Description']}}</h2>
 	<li class="list-group-item">
 		@if ($Post['ThumbnailID'] == 1)
-			<img class="img-responsive" alt="{{$Title . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Post['Photo']}}" />
+			<img class="img-responsive" alt="{{$Post['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="{{'/images/imagePost/' . $Post['Photo']}}" />
 		@elseif ($Post['ThumbnailID'] == 2)
 		<div class="embed-responsive embed-responsive-4by3">
 			<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$Post['Video']}}" frameborder="0" allowfullscreen></iframe>
@@ -332,6 +332,38 @@
 					@endforeach
 				</div>
 			<!-- End of Điền từ -->
+			@endif
+
+			@if($q['FormatID'] == 3)
+				<h3>{{$q['Question']}}</h3>
+				@if ($q['Photo'] != null)
+						<li class="list-group-item list-group-item-info">
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						</li>
+					@endif
+					<h4>Nhập câu trả lời:</h4>
+				<input type="text" name="" id="{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
+			@endif
+			@if($q['FormatID'] == 4)
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="border: #ecf0f1 solid 1px;">
+						<h2 class="title">{{$q['Question']}}</h2>
+						<input type="text" name="" id="{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">				
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						@if ($q['Photo'] != null)
+								@if ((auth()->user()) && (auth()->user()->admin == 1))
+									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+								@else
+									<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+								@endif
+						@endif
+					</div>							
+				</div>
 			@endif
 		@endforeach
 	</ul>

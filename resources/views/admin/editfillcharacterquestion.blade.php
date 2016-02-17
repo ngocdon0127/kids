@@ -11,7 +11,7 @@ EDIT QUESTION
 @endsection
 @section('body.content')
 	 <div class="container-fluid">
-		<h1 class="title">Chỉnh sửa câu hỏi sắp xếp</h1>
+		<h1 class="title">Chỉnh sửa câu hỏi điền kí tự</h1>
  
 		{!! Form::model($Question, ['method' => 'PUT', 'name' => 'editQuestionForm', 'route' => ['question.update', $Question['id']], 'files' => true]) !!}
 

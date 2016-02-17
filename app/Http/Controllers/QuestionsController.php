@@ -43,6 +43,10 @@ class QuestionsController extends Controller
 				$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
 				return view('admin.viewarangedquestion')->with(compact('Question', 'Answers'));
 			}
+			else if ($format == 4){ // Aranged Question
+				$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				return view('admin.viewfillcharacterquestion')->with(compact('Question', 'Answers'));
+			}
 	}
 
 	public function addQuestion($PostID){
@@ -59,6 +63,9 @@ class QuestionsController extends Controller
 					break;
 				case 3:
 					$view = 'admin.addarangedquestion';
+					break;
+				case 4:
+					$view = 'admin.addfillcharaterquestion';
 					break;
 				default:
 					$view = 'admin.addquestion';
@@ -106,7 +113,7 @@ class QuestionsController extends Controller
 		// var_dump($data);
 
 
-		if ($question->FormatID == '3') {
+		if ($question->FormatID == '3' || $question->FormatID == '4') {
 
 			$answer = new Answers();
 			$answer->Detail = $a;
@@ -142,9 +149,12 @@ class QuestionsController extends Controller
 				}
 				return view('admin.editfilledquestion', compact('Question', 'rawAnswers'));
 				break;
-				case 3:
-					return view('admin.editarangedquestion', compact('Question'));
-					break;
+			case 3:
+				return view('admin.editarangedquestion', compact('Question'));
+				break;
+			case 4:
+				return view('admin.editfillcharacterquestion', compact('Question'));
+				break;
 		}
 		
 	}
