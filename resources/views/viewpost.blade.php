@@ -468,7 +468,7 @@
 					}
 					else{
 						li1.style.background = '#ff5050';
-						li1.innerHTML += ' | ' + ob('li_subquestion_answer_' + ss1).innerHTML;
+						li1.innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).innerHTML + '</span>';
 						li2.style.background = '#ff5050';
 					}
 				};
@@ -605,9 +605,14 @@
 	<script>$('.sortable').draggable();</script>
 	<style>
 		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+		.li-connected, .li-dragdrop{
+			cursor: pointer;
+			background: #e0f0ff;
+			font-weight: bold;
+			color: #933;
+		}
 		.li-connected {
 			height: 75px;
-			cursor: pointer;
 		}
 		.li-dragdrop{
 			list-style-type: none;
@@ -615,7 +620,6 @@
 			padding: 20;
 			width: auto;
 			display: inline;
-			cursor: pointer;
 		}
 	</style>
 	<script>
