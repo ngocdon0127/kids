@@ -15,6 +15,7 @@ class ConstsAndFuncs
 		1 => 'Trắc nghiệm',
 		2 => 'Điền từ',
 		5 => 'Nối',
+		6 => 'Kéo thả',
 	];
 	public static $FreeQuestionsForCrawler = 5;
 

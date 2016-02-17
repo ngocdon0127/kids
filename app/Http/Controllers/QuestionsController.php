@@ -50,6 +50,10 @@ class QuestionsController extends Controller
 				}
 				return view('admin.viewconnectedquestion')->with(compact('Question', 'Subquestions', 'Answers'));
 				break;
+			case 6:		// Drag Drop Question
+				$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				return view('admin.viewdragdropquestion')->with(compact('Question', 'Answers'));
+				break;
 			default:
 				return '1';
 		}
@@ -70,6 +74,9 @@ class QuestionsController extends Controller
 					break;
 				case 5:
 					$view = 'admin.addconnectedquestion';
+					break;
+				case 6:
+					$view = 'admin.adddragdropquestion';
 					break;
 				default:
 					$view = 'admin.addquestion';

@@ -108,6 +108,7 @@ class PostsController extends Controller
 		$Spaces = array();
 		$SetOfSpaceIDs = array();
 		$AnswersFor5 = array();
+		$AnswersFor6 = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
 			switch ($q['FormatID']){
@@ -143,6 +144,11 @@ class PostsController extends Controller
 					}
 					$maxscore += count($subquestions);
 					continue;
+				case 6:		// Kéo thả
+					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$AnswersFor6 += [$q['id'] => $answers];
+					$maxscore++;
+					continue;
 			}
 		}
 		$Comments = Comments::all()->toArray();
@@ -175,6 +181,8 @@ class PostsController extends Controller
 			// Subquestion + Answers for Format Nối
 			'subquestions',
 			'AnswersFor5',
+			// Answers for Format Kéo thả
+			'AnswersFor6',
 		]));
 	}
 

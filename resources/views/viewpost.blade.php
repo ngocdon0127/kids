@@ -370,13 +370,39 @@
 					$(document).bind('pageinit', function() {
 						$( ".sortable" ).sortable();
 						$( ".sortable" ).disableSelection();
-						<!-- Refresh list to the end of sort to have a correct display -->
+						//<!-- Refresh list to the end of sort to have a correct display -->
 						$( ".sortable" ).bind( "sortstop", function(event, ui) {
 							$('.sortable').listview('refresh');
 						});
 					});
 				</script>
 			<!-- End of Nối -->
+			@elseif ($q['FormatID'] == 6)
+			<!-- Kéo thả -->
+				@if ($q['ThumbnailID'] == 1)
+					@if ($q['Photo'] != null)
+						<li class="list-group-item list-group-item-info">
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						</li>
+					@endif
+				@elseif ($q['ThumbnailID'] == 2)
+					@if ($q['Video'] != null)
+						<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
+						</div>
+					@endif
+				@endif
+				<ul>
+					<?php shuffle($AnswersFor6[$q['id']]) ?>
+					@foreach($AnswersFor6[$q['id']] as $a)
+						<li id="li_dragdrop_{{$a['id']}}">{{$a['Detail']}}</li>
+					@endforeach
+				</ul>
+			<!-- End of Kéo thả -->
 			@endif
 		@endforeach
 	</ul>
@@ -385,6 +411,7 @@
 		function nopBai(){
 			checkFilledQuestions();
 			checkConnectedQuestions();
+			checkDragDropQuestion();
 		}
 	</script>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))
@@ -450,6 +477,9 @@
 		}
 
 		function checkConnectedQuestions() {
+			
+		}
+		function checkDragDropQuestion(){
 			
 		}
 	</script>
