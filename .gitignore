@@ -8,3 +8,5 @@ Homestead.json
 browscap*
 public/images/imagePost/*
 public/images/imageQuestion/*
+*.sublime-project
+*.sublime-workspace

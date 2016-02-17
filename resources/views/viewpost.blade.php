@@ -325,13 +325,89 @@
 
 						<!-- change normal select into BS3 select manually-->
 						<script type="text/javascript">
-							$("#select_space_{{current($Spaces[$q['id']])['id']}}").selectpicker();
+							bsselect("select_space_{{current($Spaces[$q['id']])['id']}}");
 						</script>
 						<?php array_shift($Spaces[$q['id']]) ?>
 						@endif
 					@endforeach
 				</div>
 			<!-- End of Điền từ -->
+			@elseif ($q['FormatID'] == 5)
+			<!-- Nối -->
+				@if ($q['ThumbnailID'] == 1)
+					@if ($q['Photo'] != null)
+						<li class="list-group-item list-group-item-info">
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						</li>
+					@endif
+				@elseif ($q['ThumbnailID'] == 2)
+					@if ($q['Video'] != null)
+						<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
+						</div>
+					@endif
+				@endif
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px;">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<ul id="ul_subquestions_{{$q['id']}}" class="sortable">
+								@foreach($subquestions as $s)
+									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected form-control">{{$s['Question']}}</li>
+								@endforeach
+							</ul>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<ul class="sortable">
+							<?php shuffle($AnswersFor5) ?>
+							@foreach($AnswersFor5 as $s)
+								<li class="ui-state-default li-connected form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
+							@endforeach
+						</ul>
+					</div>
+					</div>
+				</div>
+				<!--<script type="text/javascript" src="/js/jquery/jquery.mobile-1.4.5.min.js"></script>-->
+				<script>
+					$(document).bind('pageinit', function() {
+						$( ".sortable" ).sortable();
+						$( ".sortable" ).disableSelection();
+						//<!-- Refresh list to the end of sort to have a correct display -->
+						$( ".sortable" ).bind( "sortstop", function(event, ui) {
+							$('.sortable').listview('refresh');
+						});
+					});
+				</script>
+			<!-- End of Nối -->
+			@elseif ($q['FormatID'] == 6)
+			<!-- Kéo thả -->
+				@if ($q['ThumbnailID'] == 1)
+					@if ($q['Photo'] != null)
+						<li class="list-group-item list-group-item-info">
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						</li>
+					@endif
+				@elseif ($q['ThumbnailID'] == 2)
+					@if ($q['Video'] != null)
+						<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
+						</div>
+					@endif
+				@endif
+				<ul id="ul_subquestions_{{$q['id']}}" class="sortable" style="margin-top: 20px">
+					<?php shuffle($AnswersFor6[$q['id']]) ?>
+					@foreach($AnswersFor6[$q['id']] as $a)
+						<li id="li_dragdrop_{{$a['id']}}" class="ui-state-default li-dragdrop form-control">{{$a['Detail']}}</li>
+					@endforeach
+				</ul>
+			<!-- End of Kéo thả -->
 			@endif
 
 			@if($q['FormatID'] == 3)
@@ -371,6 +447,8 @@
 	<script>
 		function nopBai(){
 			checkFilledQuestions();
+			checkConnectedQuestions();
+			checkDragDropQuestion();
 		}
 	</script>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))
@@ -434,6 +512,13 @@
 				}
 			}); //end of ajax
 		}
+
+		function checkConnectedQuestions() {
+			
+		}
+		function checkDragDropQuestion(){
+			
+		}
 	</script>
 	<div class="form-control" id="resultText" style="display: none; height: 200px;">
 		<b class="title" id="writeResult"></b> <br />
@@ -490,4 +575,36 @@
 		@endforeach
 		</div>
 	</div>
+@endsection
+@section('head.css')
+	<link rel="stylesheet" href="/js/jquery/jquery-ui.css">
+	<script src="/js/jquery/jquery.js"></script>
+	<script src="/js/jquery/jquery-ui.min.js"></script>
+	<script src="/js/jquery/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+	<script>$('.sortable').draggable();</script>
+	<style>
+		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+		.li-connected {
+			height: 75px;
+			cursor: pointer;
+		}
+		.li-dragdrop{
+			list-style-type: none;
+			margin: 20;
+			padding: 20;
+			width: auto;
+			display: inline;
+			cursor: pointer;
+		}
+	</style>
+	<script>
+		jQuery(function() {
+			jQuery( ".sortable" ).sortable();
+			jQuery( ".sortable" ).disableSelection();
+		});
+		function bsselect(x){
+			$("#" + x).selectpicker();
+		}
+		$.noConflict();
+	</script>
 @endsection

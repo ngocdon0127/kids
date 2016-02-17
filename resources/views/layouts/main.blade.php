@@ -19,7 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/admin.css">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
 	<meta name="_token" content="{!! csrf_token() !!}"/>
-	@if (stripos($_SERVER['REQUEST_URI'], 'post') !== false)
+	@if (stripos($_SERVER['REQUEST_URI'], '/post/') !== false)
 	<meta name="description" content="{{$Post['Title'] . ' ' . $Post['Description']}} Evangels English. Know English. Know the World" />
 	<meta name="keywords" content="{{$Post['Title'] . ' ' . $Post['Description']}} Evangels English, Know English, Know the World, learn english online, learning online, english, online, learning" />
 	@else
@@ -33,7 +33,7 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="vi_VN" />
 	<meta property="og:url" content="http://{{$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']}}" />
-	@if ((stripos($_SERVER['REQUEST_URI'], 'post') !== false) && isset($Post['Photo']))
+	@if ((stripos($_SERVER['REQUEST_URI'], '/post/') !== false) && isset($Post['Photo']))
 	<meta property="og:image" content="http://{{$_SERVER['HTTP_HOST']}}/images/imagePost/{{$Post['Photo']}}" />
 	<meta property="og:title" content="{{$Post['Title']}} - Evangels English" />
 	<meta property="og:description" content="{{$Post['Description']}} Evangels English. Know English. Know the World" />
@@ -44,8 +44,10 @@
 	@endif
 	<script type="text/javascript" src="/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/style.js"></script>
 	<script type="text/javascript" src="/js/bootstrap-select.js"></script>
+	<script type="text/javascript" src="/js/style.js"></script>
+
+
 	@if (auth() && (auth()->user()))
 	<script type="text/javascript">
 		var logout = 0;

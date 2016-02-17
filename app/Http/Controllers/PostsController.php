@@ -16,6 +16,7 @@ use App\ConstsAndFuncs;
 use App\Tags;
 use App\Hashtags;
 use App\Spaces;
+use App\Subquestions;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -107,6 +108,8 @@ class PostsController extends Controller
 		$AnswersFor2 = array();
 		$Spaces = array();
 		$SetOfSpaceIDs = array();
+		$AnswersFor5 = array();
+		$AnswersFor6 = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
 			switch ($q['FormatID']){
@@ -133,6 +136,19 @@ class PostsController extends Controller
 						$AnswersFor2 += [$s['id'] => $a];
 					}
 					$maxscore += count($spaces);
+					continue;
+				case 5:		// Nối
+					$subquestions = Subquestions::where('QuestionID', '=', $q['id'])->get()->toArray();
+					foreach ($subquestions as $s) {
+						$a = Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray();	
+						$AnswersFor5 += [$s['id'] => $a[0]];
+					}
+					$maxscore += count($subquestions);
+					continue;
+				case 6:		// Kéo thả
+					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$AnswersFor6 += [$q['id'] => $answers];
+					$maxscore++;
 					continue;
 			}
 		}
@@ -163,6 +179,11 @@ class PostsController extends Controller
 			'Spaces', 
 			'AnswersFor2',
 			'SetOfSpaceIDs',
+			// Subquestion + Answers for Format Nối
+			'subquestions',
+			'AnswersFor5',
+			// Answers for Format Kéo thả
+			'AnswersFor6',
 		]));
 	}
 
