@@ -44,7 +44,7 @@ class CoursesController extends Controller
 
     public function addCourse(){
         if (!AuthController::checkPermission()){
-            return redirect('auth/login');
+            return redirect('/login');
         };
         return view('admin.addcourse');
     }

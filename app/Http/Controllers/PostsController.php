@@ -92,6 +92,7 @@ class PostsController extends Controller
 			else{
 				$DisplayedQuestions = ((new \DateTime($user['expire_at'])) >= (new \DateTime())) ? -1 : $post['NoOfFreeQuestions'];
 			}
+
 			if ($user['admin'] >= ConstsAndFuncs::PERM_ADMIN){
 				$DisplayedQuestions = -1;
 			}
@@ -190,7 +191,7 @@ class PostsController extends Controller
 //        $courses = Courses::all();
 //        $courses->toArray();
 		if (!AuthController::checkPermission()){
-			return redirect('auth/login');
+			return redirect('/login');
 		}
 		return view('admin.addpost');
 	}

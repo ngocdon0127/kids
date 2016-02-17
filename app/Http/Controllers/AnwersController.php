@@ -48,7 +48,7 @@ class AnswersController extends Controller
 
     public function addAnswer($QuestionID){
         if (!AuthController::checkPermission()){
-            return redirect('auth/login');
+            return redirect('/login');
         };
         $question = Questions::findOrNew($QuestionID)->toArray();
         $photo = $question['Photo'];
