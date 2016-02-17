@@ -331,6 +331,8 @@ EDIT QUESTION
 								divElement.appendChild(e);
 								var hiddenTextarea = document.createElement('textarea');
 								hiddenTextarea.style.display = 'inline';
+								hiddenTextarea.setAttribute('class', 'col-sm-12');
+								hiddenTextarea.setAttribute('style', 'width: 45%');
 								divElement.appendChild(hiddenTextarea);
 								var btnDel = document.createElement('input');
 								btnDel.value = 'Xóa';

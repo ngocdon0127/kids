@@ -49,7 +49,7 @@ class PostsController extends Controller
 				(stripos($_SERVER["HTTP_USER_AGENT"], 'google') === false)
 			){
 				$redirectPath = '/post/' . $postID;
-				//return redirect('/login')->with('redirectPath', $redirectPath);
+				return redirect('/login')->with('redirectPath', $redirectPath);
 			}
 			$token = md5(rand(), false);
 			$DisplayedQuestions = ConstsAndFuncs::$FreeQuestionsForCrawler;
