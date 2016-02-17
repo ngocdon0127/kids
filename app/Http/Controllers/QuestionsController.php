@@ -19,7 +19,7 @@ use App\Http\Controllers\PostsController;
 
 class QuestionsController extends Controller
 {
-    protected static $imageQuestionPath = '/public/images/imageQuestion/';
+	protected static $imageQuestionPath = '/public/images/imageQuestion/';
 
 	public function viewQuestion($QuestionID){
 		$Question = Questions::find($QuestionID);
