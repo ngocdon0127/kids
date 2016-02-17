@@ -115,43 +115,10 @@
 			fill++;
 			if (fill >= maxScore){
 
-				var resultText = 'Đúng ' + score + '/' + maxScore + ' câu.\n';
-				var x = {!! $Comments !!};
-				for(var i = x.length - 1; i >= 0; i--) {
-					if (Math.floor(score / maxScore * 100) >= x[i]['min']){
-						resultText += x[i]['comment'];
-						break;
-					}
-				}
-				ob('writeResult').innerHTML = resultText;
-				ob('resultText').style.display = 'block';
-				$('html, body').animate({
-					scrollTop: $("#resultText").offset().top
-				}, 1000);
 
 				// console.log('diem: ' + score);
 				// save result using AJAX
-				$.ajax({
-					url: "/finishexam",
-					type: "POST",
-					beforeSend: function (xhr) {
-						var token = $('meta[name="_token"]').attr('content');
-
-						if (token) {
-							return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-						}
-					},
-					data: {
-						Score:  score,
-						MaxScore: maxScore,
-						token: ob('token').value
-					},
-					success: function (data) {
-						console.log(data);
-					}, error: function (data) {
-						console.log(data);
-					}
-				}); //end of ajax
+				submitResult();
 
 			}
 			else{
@@ -354,14 +321,14 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px;">
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-							<ul id="ul_subquestions_{{$q['id']}}" class="sortable">
+							<ul id="ul_subquestion_{{$q['id']}}" class="sortable">
 								@foreach($Subquestions[$q['id']] as $s)
 									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected form-control">{{$s['Question']}}</li>
 								@endforeach
 							</ul>
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-						<ul class="sortable">
+						<ul id="ul_subquestion_answer_{{$q['id']}}" class="sortable">
 							<?php shuffle($AnswersFor5[$q['id']]) ?>
 							@foreach($AnswersFor5[$q['id']] as $s)
 								<li class="ui-state-default li-connected form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
@@ -401,7 +368,7 @@
 						</div>
 					@endif
 				@endif
-				<ul id="ul_subquestions_{{$q['id']}}" class="sortable" style="margin-top: 20px">
+				<ul id="ul_dragdrop_{{$q['id']}}" class="sortable" style="margin-top: 20px">
 					<?php shuffle($AnswersFor6[$q['id']]) ?>
 					@foreach($AnswersFor6[$q['id']] as $a)
 						<li id="li_dragdrop_{{$a['id']}}" class="ui-state-default li-dragdrop form-control">{{$a['Detail']}}</li>
@@ -448,7 +415,8 @@
 		function nopBai(){
 			checkFilledQuestions();
 			checkConnectedQuestions();
-			checkDragDropQuestion();
+			checkDragDropQuestions();
+			submitResult();
 		}
 	</script>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))
@@ -472,6 +440,71 @@
 					btn.css('background', "#ff5050");
 				}
 			};
+			var setOfOptions = document.getElementsByClassName('option_space_1');
+			for (var i = 0; i < setOfOptions.length; i++) {
+				setOfOptions[i].innerHTML += ' <span class="glyphicon glyphicon-ok">';
+			}
+		}
+
+		function checkConnectedQuestions() {
+			var setOfQuestionIDs = {!! json_encode($QuestionFor5IDs) !!};
+			var lenq = 'li_subquestion_'.length;
+			var lena = 'li_subquestion_answer_'.length;
+			for (var i = 0; i < setOfQuestionIDs.length; i++) {
+				var ulSubQuestions = ob('ul_subquestion_' + setOfQuestionIDs[i]);
+				var ulSubQuestionAnswers = ob('ul_subquestion_answer_' + setOfQuestionIDs[i]);
+				console.log(ulSubQuestions.children.length);
+				for (var j = 0; j < ulSubQuestions.children.length; j++) {
+					var li1 = ulSubQuestions.children[j];
+					var li2 = ulSubQuestionAnswers.children[j];
+					var id1 = li1.id;
+					var id2 = li2.id;
+					var ss1 = id1.substring(lenq, id1.length);
+					var ss2 = id2.substring(lena, id2.length);
+					if (ss1 == ss2){
+						score++;
+						li1.style.background = '#66ff66';
+						li2.style.background = '#66ff66';
+					}
+					else{
+						li1.style.background = '#ff5050';
+						li1.innerHTML += ' | ' + ob('li_subquestion_answer_' + ss1).innerHTML;
+						li2.style.background = '#ff5050';
+					}
+				};
+			};
+		}
+
+		function checkDragDropQuestions(){
+			var setOfDragDropQuestions = {!! json_encode($DragDropIDs) !!};
+			for (var i = 0; i < setOfDragDropQuestions.length; i++) {
+				var check = true;
+				var ulDragDrop = ob('ul_dragdrop_' + setOfDragDropQuestions[i]);
+				for (var j = 1; j < ulDragDrop.children.length; j++) {
+					var li1 = ulDragDrop.children[j - 1];
+					var li2 = ulDragDrop.children[j];
+					var len = 'li_dragdrop_'.length;
+					var id1 = li1.id.substring(len, li1.length);
+					var id2 = li2.id.substring(len, li2.length);
+					console.log(id1 + " : " + id2);
+					if (id1 > id2){
+						check = false;
+						console.log('false');
+						break;
+					}
+				}
+				var c = '#ff5050';
+				if (check){
+					score++;
+					c = '#66ff66';
+				}
+				for (var i = 0; i < ulDragDrop.children.length; i++) {
+					ulDragDrop.children[i].style.background = c;
+				};
+			}
+		}
+
+		function submitResult(){
 			var resultText = 'Đúng ' + score + '/' + maxScore + ' câu.\n';
 			var x = {!! $Comments !!};
 			for(var i = x.length - 1; i >= 0; i--) {
@@ -485,11 +518,6 @@
 			$('html, body').animate({
 				scrollTop: $("#resultText").offset().top
 			}, 1000);
-			var setOfOptions = document.getElementsByClassName('option_space_1');
-			for (var i = 0; i < setOfOptions.length; i++) {
-				setOfOptions[i].innerHTML += ' <span class="glyphicon glyphicon-ok">';
-			}
-
 			$.ajax({
 				url: "/finishexam",
 				type: "POST",
@@ -511,13 +539,6 @@
 					console.log(data);
 				}
 			}); //end of ajax
-		}
-
-		function checkConnectedQuestions() {
-			
-		}
-		function checkDragDropQuestion(){
-			
 		}
 	</script>
 	<div class="form-control" id="resultText" style="display: none; height: 200px;">

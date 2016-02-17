@@ -108,9 +108,11 @@ class PostsController extends Controller
 		$AnswersFor2 = array();
 		$Spaces = array();
 		$SetOfSpaceIDs = array();
-		$AnswersFor5 = array();
 		$Subquestions = array();
+		$AnswersFor5 = array();
+		$QuestionFor5IDs = array();
 		$AnswersFor6 = array();
+		$DragDropIDs = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
 			switch ($q['FormatID']){
@@ -148,8 +150,10 @@ class PostsController extends Controller
 					$AnswersFor5 += [$q['id'] => $answer];
 					$maxscore += count($subquestions);
 					$Subquestions += [$q['id'] => $subquestions];
+					$QuestionFor5IDs = array_merge($QuestionFor5IDs, [$q['id']]);
 					continue;
 				case 6:		// Kéo thả
+					$DragDropIDs = array_merge($DragDropIDs, [$q['id']]);
 					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
 					$AnswersFor6 += [$q['id'] => $answers];
 					$maxscore++;
@@ -187,8 +191,10 @@ class PostsController extends Controller
 			'subquestions',
 			'AnswersFor5',
 			'Subquestions',
+			'QuestionFor5IDs',
 			// Answers for Format Kéo thả
 			'AnswersFor6',
+			'DragDropIDs',
 		]));
 	}
 
