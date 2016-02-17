@@ -109,6 +109,7 @@ class PostsController extends Controller
 		$Spaces = array();
 		$SetOfSpaceIDs = array();
 		$AnswersFor5 = array();
+		$Subquestions = array();
 		$AnswersFor6 = array();
 		$maxscore = 0;
 		foreach ($questions as $q){
@@ -139,11 +140,14 @@ class PostsController extends Controller
 					continue;
 				case 5:		// Nối
 					$subquestions = Subquestions::where('QuestionID', '=', $q['id'])->get()->toArray();
+					$answer = array();
 					foreach ($subquestions as $s) {
 						$a = Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray();	
-						$AnswersFor5 += [$s['id'] => $a[0]];
+						$answer += [$s['id'] => $a[0]];
 					}
+					$AnswersFor5 += [$q['id'] => $answer];
 					$maxscore += count($subquestions);
+					$Subquestions += [$q['id'] => $subquestions];
 					continue;
 				case 6:		// Kéo thả
 					$answers = Answers::where('QuestionID', '=', $q['id'])->get()->toArray();
@@ -182,6 +186,7 @@ class PostsController extends Controller
 			// Subquestion + Answers for Format Nối
 			'subquestions',
 			'AnswersFor5',
+			'Subquestions',
 			// Answers for Format Kéo thả
 			'AnswersFor6',
 		]));

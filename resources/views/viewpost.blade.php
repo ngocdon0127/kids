@@ -355,15 +355,15 @@
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<ul id="ul_subquestions_{{$q['id']}}" class="sortable">
-								@foreach($subquestions as $s)
+								@foreach($Subquestions[$q['id']] as $s)
 									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected form-control">{{$s['Question']}}</li>
 								@endforeach
 							</ul>
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 						<ul class="sortable">
-							<?php shuffle($AnswersFor5) ?>
-							@foreach($AnswersFor5 as $s)
+							<?php shuffle($AnswersFor5[$q['id']]) ?>
+							@foreach($AnswersFor5[$q['id']] as $s)
 								<li class="ui-state-default li-connected form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
 							@endforeach
 						</ul>

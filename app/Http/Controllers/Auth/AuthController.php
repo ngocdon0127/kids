@@ -81,13 +81,17 @@ class AuthController extends Controller
         }
         return true;
     }
+
+    // override login in AuthenticatesUsers.php to redirect User to previous post after logging in.
     public function login(Request $request)
     {
         $this->validateLogin($request);
 
+        // Begin override
         if ($request->redirectPath != null){
             $this->redirectPath = $request->redirectPath;;
         }
+        // End override
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
