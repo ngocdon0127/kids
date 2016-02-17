@@ -148,11 +148,11 @@ Route::group(['middleware' => ['web']], function () {
 		]);
 		Route::post('/addsubquestion/{questionid}', [
 			'as'    => 'admin.addsubquestion',
-			'uses'  => 'SubQuestionsController@savesubquestion'
+			'uses'  => 'SubquestionsController@savesubquestion'
 		]);
 		Route::post('/editsubquestion/{questionid}', [
 			'as'    => "admin.editsubquestion",
-			'uses'  => "SubQuestionsController@update"
+			'uses'  => "SubquestionsController@update"
 		]);
 		Route::post('/addanswer/{questionid}',[
 			'as'    => 'admin.saveanswer',

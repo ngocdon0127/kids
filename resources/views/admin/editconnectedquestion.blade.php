@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('head.title')
-ADD QUESTION
+EDIT QUESTION
 @endsection
 @section('head.css')
 <style>
@@ -16,15 +16,11 @@ ADD QUESTION
 	<div class="container-fluid">
 		<h1 class="col-md-offset-3 title">Thêm câu hỏi mới </h1>
 
-		{!! Form::open(['name' => 'addQuestionForm', 'route' => ['admin.addquestion', $PostID], 'class'=>'form-horizontal', 'files' => true]) !!}
+		{!! Form::model($Question, ['name' => 'editQuestionForm', 'route' => ['admin.addquestion', $Question['PostID']], 'class'=>'form-horizontal', 'files' => true]) !!}
 
 		<div class="form-group">
 			{!! Form::label('Question','Question : ',['class' => 'control-label']) !!}
-			{!! Form::text('Question','',['class'=>'form-control']) !!}
-		</div>
-		<div class="form-group" style="display: none">
-			{!! Form::label('FormatID','FormatID : ',['class' => 'control-label']) !!}
-			{!! Form::text('FormatID', $_GET['FormatID'], ['class'=>'form-control']) !!}
+			{!! Form::text('Question', null,['class'=>'form-control']) !!}
 		</div>
 		<div class="form-group">
 			{!! Form::label('ThumbnailID', 'Thumbnail : ',['class' => 'control-label']) !!}
@@ -96,7 +92,7 @@ ADD QUESTION
 		</div>
 		<div class="form-group">
 			{!! Form::label('Description', 'Description : ',['class' => 'control-label']) !!}
-			{!! Form::text('Description','',['class'=>'form-control']) !!}
+			{!! Form::text('Description', null,['class'=>'form-control']) !!}
 		</div>
 		<div class="form-group">
 			{!! Form::label('', '',['class' => 'control-label']) !!}
@@ -201,9 +197,8 @@ ADD QUESTION
 				fd.append('Description', ob('Description').value);
 				fd.append('Video', ob('Video').value);
 				fd.append('Photo', p);
-				fd.append('FormatID', ob('FormatID').value);
 				$.ajax({
-					url: '/admin/addquestion/' + {!! $PostID !!},
+					url: '/admin/editquestion/' + {!! $Question['id'] !!},
 					type: "POST",
 					contentType: false,
 					beforeSend: function (xhr) {
@@ -219,14 +214,11 @@ ADD QUESTION
 					success: function (data) {
 						console.log(data);
 						// return;
-						var qID = data;
 						if (count < 1){
-								window.location = '/question/' + qID;
+								window.location = '/question/{{$Question["id"]}}';
 								return;
 						}
-						var action = document.addSubQuestionForm.action;
-						document.addSubQuestionForm.action = action + '/' + qID;
-						console.log(document.addSubQuestionForm.action);
+						console.log(document.editSubQuestionForm.action);
 						ob('QuestionID').value = data;
 						submitFormAnswers();
 					},
@@ -240,13 +232,13 @@ ADD QUESTION
 			{!! Form::close() !!}
 </div>
 		<div class="container-fluid">
-			{!! Form::open(['name' => 'addSubQuestionForm', 'route' => ['admin.addsubquestion', ''],'class'=>'form-group']) !!}
+			{!! Form::open(['name' => 'editSubQuestionForm', 'route' => ['admin.editsubquestion', $Question['id']],'class'=>'form-group']) !!}
 
 			<div class="form-group">
 					{!! Form::label('Detail', 'Nhập các hàng: ',['class'=>'control-label']) !!}
 						<script type="text/javascript">
-							var count = -1;
-							var minAnswer = 4;
+							var count = {{ count($Subquestions) }};
+							var minAnswer = count;
 							if (minAnswer == 0){
 								minAnswer = 4;
 							}
@@ -358,7 +350,7 @@ ADD QUESTION
 									ob('ta_answer' + i).innerHTML = ob('ta_answer' + i).value.trim();
 									ob('answer' + i).innerHTML = ob('answer' + i).value.trim();
 								}
-								document.addSubQuestionForm.submit();
+								document.editSubQuestionForm.submit();
 							}
 	//                 </script>
 				<div class="" id="div_answer">
@@ -371,6 +363,14 @@ ADD QUESTION
 							}
 							updateID();
 							var index = 1;
+							var subQuestion = {!! json_encode($Subquestions) !!};
+							for (var i = 0; i < subQuestion.length; i++) {
+								ob('answer' + (i + 1)).innerHTML = ob('answer' + (i + 1)).value = subQuestion[i];
+							}
+							var answers = {!! json_encode($old_answers) !!}
+							for (var i = 0; i < answers.length; i++) {
+								ob('ta_answer' + (i + 1)).innerHTML = ob('ta_answer' + (i + 1)).value = answers[i];
+							};
 						</script>
 					</div>
 					<input type="button" value="+" onclick="add(); updateID()">
@@ -380,7 +380,7 @@ ADD QUESTION
 			{!! Form::close() !!}
 				</div>
 
-				<button class="btn btn-primary" onclick="submitForm()" type="button" id="btnAddQuestion">Thêm</button>
+				<button class="btn btn-primary" onclick="submitForm()" type="button" id="btnAddQuestion">Cập nhật</button>
 		</div>
 <!-- end container -->
 

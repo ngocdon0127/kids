@@ -19,18 +19,16 @@
 	@endif
 
 	<h2 class="title">{!! nl2br($Question['Description']) !!}</h2>
-	<h2 class="title">Đáp án</h2>
 	<ul class="list-group">
-		@foreach($SubQuestions as $s)
+		@foreach($Subquestions as $s)
 			<li class="list-group-item list-group-item-info">
-				{!! $s['Questions'] !!} | {!! $Answers[$s['id']][0]['Detail']!!}
+				{!! $s['Question'] !!} | {!! $Answers[$s['id']][0]['Detail']!!}
 			</li>
 			<div class="clear"></div>
 		@endforeach
 	</ul>
 	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 	<a class="btn btn-primary col-xs-12" href="{{route('question.edit', $Question['id'])}}">Sửa câu hỏi</a>
-	<a class="btn btn-primary col-xs-12" href="{{route('answer.edit', $Question['id'])}}">Sửa đáp án</a>
 	<a class="btn btn-primary col-xs-12" href="{{route('user.viewpost',$Question['PostID'])}}">Quay lại bài đăng</a>
 
 	<a class="col-xs-12 btn btn-danger" data-toggle="modal" href='#modal-id'>Xóa câu hỏi này</a>

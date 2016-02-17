@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Answers;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\SubquestionsController;
 use App\Questions;
 use App\Posts;
 use App\Spaces;
-use App\SubQuestions;
+use App\Subquestions;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -42,12 +43,12 @@ class QuestionsController extends Controller
 				return view('admin.viewfilledquestion')->with(compact('Question', 'Spaces', 'Answers'));
 				break;
 			case 5:		// Connected Question
-				$SubQuestions = SubQuestions::where('QuestionID', '=', $QuestionID)->get()->toArray();
+				$Subquestions = Subquestions::where('QuestionID', '=', $QuestionID)->get()->toArray();
 				$Answers = array();
-				foreach ($SubQuestions as $s) {
+				foreach ($Subquestions as $s) {
 					$Answers += [$s['id'] => Answers::where('SubQuestionID', '=', $s['id'])->get()->toArray()];
 				}
-				return view('admin.viewconnectedquestion')->with(compact('Question', 'SubQuestions', 'Answers'));
+				return view('admin.viewconnectedquestion')->with(compact('Question', 'Subquestions', 'Answers'));
 				break;
 			default:
 				return '1';
@@ -142,8 +143,19 @@ class QuestionsController extends Controller
 				}
 				return view('admin.editfilledquestion', compact('Question', 'rawAnswers'));
 				break;
-			// case 5:			// Connected Question
-				// $SubQuestions = SubQuestions::where('QuestionID', '=', $id)
+			case 5:			// Connected Question
+				$sq = Subquestions::where('QuestionID', '=', $id)->get()->toArray();
+				$Answers = array();
+				$old_answers = array();
+				$Subquestions = array();
+				foreach ($sq as $s) {
+					$Subquestions = array_merge($Subquestions, [$s['Question']]);
+					$a = Answers::where('SubQuestionID', '=', $s['id'])->first()->toArray();
+					$Answers += [$s['id'] => $a];
+					$old_answers = array_merge($old_answers, [$a['Detail']]);
+				}
+				return view('admin.editconnectedquestion')->with(compact('Question', 'Subquestions', 'Answers', 'old_answers'));
+				break;
 		}
 		
 	}
@@ -197,16 +209,29 @@ class QuestionsController extends Controller
 		$postid = $question['PostID'];
 		$format = $question['FormatID'];
 		if ($format == 1){
-			$answers = Answers::where('QuestionID', '=', $id)->get()->toArray();
-			foreach ($answers as $answer) {
-				Answers::destroy($answer['id']);
-			}
+			
 		}
 		else if ($format == 2){
-			$spaces = Spaces::where('QuestionID', '=', $id)->get()->toArray();
-			foreach ($spaces as $value) {
-				SpacesController::destroy($value['id']);
-			}
+			
+		}
+		switch ($format){
+			case 1:
+				$answers = Answers::where('QuestionID', '=', $id)->get()->toArray();
+				foreach ($answers as $answer) {
+					Answers::destroy($answer['id']);
+				}
+				break;
+			case 2:
+				$spaces = Spaces::where('QuestionID', '=', $id)->get()->toArray();
+				foreach ($spaces as $value) {
+					SpacesController::destroy($value['id']);
+				}
+				break;
+			case 5:
+				$subq = Subquestions::where('QuestionID', '=', $id)->get()->toArray();
+				foreach ($subq as $s) {
+					SubquestionsController::destroy($s['id']);
+				}
 		}
 		$question->delete();
 		return redirect(route('user.viewpost', $postid));

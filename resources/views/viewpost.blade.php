@@ -332,6 +332,32 @@
 					@endforeach
 				</div>
 			<!-- End of Điền từ -->
+			@elseif ($q['FormatID'] == 5)
+			<!-- Nối -->
+				@if ($q['ThumbnailID'] == 1)
+					@if ($q['Photo'] != null)
+						<li class="list-group-item list-group-item-info">
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						</li>
+					@endif
+				@elseif ($q['ThumbnailID'] == 2)
+					@if ($q['Video'] != null)
+						<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$q['Video']}}" frameborder="0" allowfullscreen></iframe>
+						</div>
+					@endif
+				@endif
+
+				<ul>
+				@foreach($subquestions as $s)
+					<li>{{$s['Question']}} {{$AnswersFor5[$s['id']]['Detail']}}</li>
+				@endforeach
+				</ul>
+			<!-- End of Nối -->
 			@endif
 		@endforeach
 	</ul>

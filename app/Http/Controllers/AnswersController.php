@@ -112,7 +112,12 @@ class AnswersController extends Controller
         $question = Questions::find($QuestionID)->toArray();
 
         $photo = $question['Photo'];
-        return view('admin.editanswer')->with(['PostID' => $question['PostID'], "QuestionID" => $QuestionID, 'Answers' => $Answers, 'Photo' => $photo]);
+        return view('admin.editanswer')->with([
+            'PostID' => $question['PostID'], 
+            "QuestionID" => $QuestionID, 
+            'Answers' => $Answers, 
+            'Photo' => $photo
+        ]);
     }
 
     public static $clientTag = ['[u]', '[/u]'];
