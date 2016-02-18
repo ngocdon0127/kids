@@ -35,4 +35,16 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '1096742557032255',
+        'client_secret' => 'a5d398ad79c91ef0ffa8f29a763474f1',
+        'redirect' => 'http://kids.evangelsenglish.com/fbcallback',
+    ],
+
+    'google' => [
+        'client_id' => '872662012321-2a300brmje1lhj09chjpcjn29pb6h2mt.apps.googleusercontent.com',
+        'client_secret' => 'LhTaJCFeSStRO0-ykzyLjYBA',
+        'redirect' => 'http://kids.evangelsenglish.com/ggcallback',
+    ]
+
 ];

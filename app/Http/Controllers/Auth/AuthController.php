@@ -68,10 +68,19 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $Type = 1;
+        $token = null;
+        if (array_key_exists('Type', $data))
+            $Type = $data['Type'];
+        if (array_key_exists('token', $data))
+            $token = $data['token'];
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'token' => $token,
+            'Type' =>  $Type,
+            'expire_at' => new \DateTime(),
         ]);
     }
 
@@ -119,5 +128,57 @@ class AuthController extends Controller
         }
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+        public function redirectToProvider(){
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function googleRedirectToProvider(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleProviderCallback(){
+        $user = Socialite::driver('facebook')->user();
+        $data = ['name' => $user->name, 'email' => $user->email, 'password' => $user->token, 'token' => $user->token, 'Type' => 2];
+//        dd($data);
+        if ($user->email == null){
+            $data['email'] = $user->id . "@facebook.com";
+        }
+//        dd($data);
+        $userDB = User::where('email', 'LIKE', $data['email'])->first();
+        if (!is_null($userDB)){
+            $userDB->token = $data['token'];
+            $userDB->update();
+            Auth::login($userDB);
+        }
+        else{
+            Auth::login($this->create($data));
+        }
+        return redirect('/');
+    }
+
+    public function googleHandleProviderCallback(){
+        $user = Socialite::driver('google')->user();
+//        dd($user);
+        $data = ['name' => $user->name, 'email' => $user->email, 'password' => $user->token, 'token' => $user->token, 'Type' => 3];
+//        dd($data);
+        if ($user->email == null){
+            $data['email'] = $user->id . "@gmail.com";
+        }
+        if ($user->name == null){
+            $data['name'] = $data['email'];
+        }
+//        dd($data);
+        $userDB = User::where('email', 'LIKE', $data['email'])->first();
+        if (!is_null($userDB)){
+            $userDB->token = $data['token'];
+            $userDB->update();
+            Auth::login($userDB);
+        }
+        else{
+            Auth::login($this->create($data));
+        }
+        return redirect('/');
     }
 }

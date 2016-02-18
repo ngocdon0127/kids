@@ -64,6 +64,14 @@
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <a class="btn btn-primary" style="width: 250px;" href="{{route('login.facebook')}}">Sign in with Facebook</a>   
+                            </div>
+                            <div style="padding-top: 5px;" class="col-md-6 col-md-offset-4">
+                                <a class="btn btn-danger" style="width: 250px;" href="{{route('login.google')}}">Sign in with Google</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
