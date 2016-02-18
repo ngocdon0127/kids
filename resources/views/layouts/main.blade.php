@@ -28,7 +28,7 @@
 	@endif
 	<meta name="author" content="TEC" />
 	<meta name="copyright" content="TEC" />
-	<!-- <meta property="fb:app_id" content="1657402167852948"> -->
+	<meta property="fb:app_id" content="1096742557032255">
 	<meta property="og:site_name" content="Evangels English" />
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="vi_VN" />
