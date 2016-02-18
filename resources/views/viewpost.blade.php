@@ -497,10 +497,8 @@
 					var len = 'li_dragdrop_'.length;
 					var id1 = li1.id.substring(len, li1.length);
 					var id2 = li2.id.substring(len, li2.length);
-					console.log(id1 + " : " + id2);
 					if (id1 > id2){
 						check = false;
-						console.log('false');
 						break;
 					}
 				}
@@ -512,9 +510,9 @@
 				else{
 					ob('answer_dragdrop_' + setOfDragDropQuestions[i]).setAttribute('type', 'text');
 				}
-				for (var i = 0; i < ulDragDrop.children.length; i++) {
-					ulDragDrop.children[i].style.background = c;
-				};
+				for (var k = 0; k < ulDragDrop.children.length; k++) {
+					ulDragDrop.children[k].style.background = c;
+				}
 			}
 		}
 

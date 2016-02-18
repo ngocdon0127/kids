@@ -163,6 +163,7 @@ class QuestionsController extends Controller
 		// dd($format);
 		switch ($format) {
 			case 1:			// Multiple-choices Question
+			case 6:			// Drag Drop Question
 				return view('admin.editquestion', compact('Question'));
 				break;
 			case 2:			// Filled Question
