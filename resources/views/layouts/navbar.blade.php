@@ -38,6 +38,7 @@
 						<li style= "list-style: none;" class="dropdown">
 							<a href="#" id="username-dropdown" style="text-decoration: none;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
+								<li><a href="{{ route('user.getactive') }}">Nạp thẻ</a></li>
 								<li><a href="{{ url('/logout') }}" onclick='logout = 1;'>Logout</a></li>
 							</ul>
 						</li>

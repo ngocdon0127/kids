@@ -217,6 +217,15 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'callback.google',
 		'uses' => 'Auth\AuthController@googleHandleProviderCallback'
 	]);
+	Route::get('/active', [
+		'as' => 'user.getactive',
+		'uses' => 'PaidsController@getActive'
+	]);
+
+	Route::post('/active', [
+		'as' => 'user.postactive',
+		'uses' => 'PaidsController@postactive'
+	]);
 });
 
 

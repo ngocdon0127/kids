@@ -550,7 +550,7 @@
 		}
 
 		function submitResult(){
-			var resultText = 'Đúng ' + score + '/' + maxScore + ' câu.\n';
+			var resultText = 'Bé làm đúng ' + score + '/' + maxScore + ' điểm.\n';
 			var x = {!! $Comments !!};
 			for(var i = x.length - 1; i >= 0; i--) {
 				if (Math.floor(score / maxScore * 100) >= x[i]['min']){
