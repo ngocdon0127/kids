@@ -199,17 +199,27 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+    Route::get('/auth/facebook', [
+		'as' => 'login.facebook',
+		'uses' => 'Auth\AuthController@redirectToProvider'
+	]);
+
+	Route::get('/auth/google', [
+		'as' => 'login.google',
+		'uses' => 'Auth\AuthController@googleRedirectToProvider'
+	]);
+	Route::get('/fbcallback', [
+		'as' => 'callback.facebook',
+		'uses' => 'Auth\AuthController@handleProviderCallback'
+	]);
+
+	Route::get('/ggcallback', [
+		'as' => 'callback.google',
+		'uses' => 'Auth\AuthController@googleHandleProviderCallback'
+	]);
 });
 
-Route::get('/auth/facebook', [
-	'as' => 'login.facebook',
-	'uses' => 'Auth\AuthController@redirectToProvider'
-]);
 
-Route::get('/auth/google', [
-	'as' => 'login.google',
-	'uses' => 'Auth\AuthController@googleRedirectToProvider'
-]);
 
 Route::get('/search', [
 	'as' => 'search',
