@@ -229,6 +229,54 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::group(['prefix' => '/subadmin'], function(){
+	    Route::get('/',[
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.view',
+	        'uses'  => 'ClassController@index'
+	    ]);
+
+	    Route::get('/addclass', [
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.addclass',
+	        'uses'   => 'ClassController@addclass'
+	    ]);
+
+	    Route::post('/addclass',[
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.saveclass',
+	        'uses'  => 'ClassController@saveclass'
+	        ]);
+
+	    Route::get('/class/{id}',[
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.viewclass',
+	        'uses'  =>  'ClassController@viewclass'
+	    ]);
+
+	    Route::get('/class/{id}/addmembers',[
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.addmembers',
+	        'uses'  =>  'ClassController@addmembers'
+	    ]);
+
+	    Route::post('/class/{id}/addmembers',[
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.savemembers',
+	        'uses'  =>  'ClassController@savemembers'
+	    ]);
+
+	    Route::get('/class/{id}/delete',[
+	        'middleware' =>  'admin',
+	        'as'    => 'subadmin.deleteclass',
+	        'uses'  => 'ClassController@deleteclass'
+	    ]);
+    });
+});
+
 
 Route::get('/search', [
 	'as' => 'search',

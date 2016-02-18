@@ -23,6 +23,9 @@
 				@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 				<li id="navbar-button"><a class="navbar-button" href="{{route('admin')}}">Admin</a></li>
 				@endif
+				@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_SUBADMIN))
+				<li id="navbar-button"><a class="navbar-button" href="{{route('subadmin.view')}}">SubAdmin</a></li>
+				@endif
 			</ul>
 			{!! Form::open(['method' => 'GET', 'name' => 'searchForm', 'url' => '/search', 'role'=>'search', 'class' => 'navbar-form navbar-right']) !!}
 				
