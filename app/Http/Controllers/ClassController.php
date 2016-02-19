@@ -70,7 +70,7 @@ class ClassController extends Controller
                 'ClassID'   => $classID,
                 'UserID'    => $member[0]->id
                 ]);
-                return redirect(route('subadmin.addmembers',$classID))->with('error','Thêm thành công');
+                return redirect(route('subadmin.addmembers',$classID))->with('status','Thêm thành công');
             }
         } else { 
           //echo 'User vừa nhập không tồn tại';

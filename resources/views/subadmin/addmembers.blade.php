@@ -25,6 +25,9 @@
 	@if(Session::get('error') != NULL)
 	<p class="alert alert-danger"> {{Session::get('error')}}</p>
 	@endif
+	@if (Session::get('status') != NULL)
+	<p class="alert alert-success"> {{Session::get('status')}}</p>
+	@endif
 	{!!Form::label('email', 'Email User: ')!!}
 	{!!Form::text('email','',['class'	=> 'form-control', 'id'	=> 'email', 'placeholder'	=> 'Nhập vào địa chỉ email', 'type'	=> 'email'])	!!}
 
