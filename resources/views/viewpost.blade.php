@@ -440,20 +440,21 @@
 		$('div[class="btn-group bootstrap-select"').css("width","auto");
 		$('button[class="btn dropdown-toggle btn-default"]').css({"background":"#e0f0ff","color":"#993333","font-weight":"bold"});
 		$(document).ready(function(){
-     		var max_height = 0;
-     		//Duyệt qua 3 cột để lấy kích thước của cột lớn nhất
-     		$(".fw_left,.fw_right").each(function(){
-         	if($(this).height() > max_height)
-          	max_height = $(this).height();
-     	});
-     		console.log("max_height : " + max_height);
-     	//Gán độ cao 3 cột theo giá trị max_heigh
-     	var h2_height = max_height*0.7-30;
-     	$(".fw_left_above").height(h2_height);
-     	// $(".fw_left_above").css({"top":"50%","margin-bottom":h2_height*0.5});
-     	$(".fw_left_below").height(max_height*0.3-30);
+			var max_height = 0;
+			//Duyệt qua 3 cột để lấy kích thước của cột lớn nhất
+			// $(".fw_left,.fw_right").each(function(){
+			// 	if($(this).height() > max_height)
+			// 	max_height = $(this).height();
+			// });
+			//Gán độ cao 3 cột theo giá trị max_heigh
+			// max_height = max_height*0.7-30;
+			max_height = $('.fw_right').height();
+			console.log("max_height : " + max_height);
+			$(".fw_left_above").height(max_height * 0.7 - 30);
+			// $(".fw_left_above").css({"top":"50%","margin-bottom":h2_height*0.5});
+			$(".fw_left_below").height(max_height * 0.3 - 30);
 
-    });
+		});
 		function checkFilledQuestions(){
 			var setOfSpaces = {!! json_encode($SetOfSpaceIDs) !!};
 			for (var i = 0; i < setOfSpaces.length; i++) {
@@ -675,18 +676,18 @@
 			color: #933;
 		}
 		.li-connected{
-    		position: relative;
+			position: relative;
 			height: 80px;
 			border-radius: 10px;
 			margin-top: 10px;
 		}
 		.li-connected p {
 			margin: 0;
-    		position: absolute;
-    		top: 50%;
-    		left: 50%;
-    		right: -50%;
-    		transform: translate(-50%, -50%);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			right: -50%;
+			transform: translate(-50%, -50%);
 		}
 		.li-dragdrop{
 			list-style-type: none;
