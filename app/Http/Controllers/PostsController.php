@@ -63,7 +63,7 @@ class PostsController extends Controller
 		$post->update();
 		$post = $post->toArray();
 		$courseID = $post['CourseID'];
-		 if (auth() && (auth()->user())){
+		if (auth() && (auth()->user())){
 			$userID = auth()->user()->getAuthIdentifier();
 			$tmp = Learnings::where('UserID', '=', $userID)->where('CourseID', '=', $courseID)->get()->toArray();
 			if (count($tmp) < 1){
@@ -96,12 +96,11 @@ class PostsController extends Controller
 			if ($user['admin'] >= ConstsAndFuncs::PERM_ADMIN){
 				$DisplayedQuestions = -1;
 			}
-		}
-
-		// If web hasn't provide some VIP package
-		// every user will be able to see full post
-		if (ConstsAndFuncs::IS_PAID == 0){
-			$DisplayedQuestions = -1;
+			// If web hasn't provide some VIP package
+			// every user will be able to see full post
+			if (ConstsAndFuncs::IS_PAID == 0){
+				$DisplayedQuestions = -1;
+			}
 		}
 
 		$photo = $post['Photo'];
