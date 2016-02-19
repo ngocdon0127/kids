@@ -23,7 +23,7 @@
 		@endif
 	</li>
 	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
-		<a class ="col-xs-12 btn btn-primary" href="{{route('post.edit', $Post['id'])}}">Sửa thông tin bài đăng</a>
+		<a class="col-xs-12 btn btn-primary" href="{{route('post.edit', $Post['id'])}}">Sửa thông tin bài đăng</a>
 		<a class="col-xs-12 btn btn-primary" data-toggle="modal" href='#modal-add-question'>Thêm câu hỏi</a>
 
 		<a class="col-xs-12 btn btn-danger" data-toggle="modal" href='#modal-id'>Xóa bài đăng này</a>
@@ -511,7 +511,7 @@
 					}
 					else{
 						li1.style.background = '#ff5050';
-						li1.innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).innerHTML + '</span>';
+						li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].children[0].innerHTML + '</span>';
 						li2.style.background = '#ff5050';
 					}
 				};

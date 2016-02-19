@@ -1,10 +1,10 @@
 @extends('layouts.main')
 
- @section('head.title')
- ADD MEMBERS
- @endsection
+@section('head.title')
+ADD MEMBERS
+@endsection
 
- @section('body.content')
+@section('body.content')
 	{!!Form::open([
 		'route'		=> ['subadmin.savemembers', $id],
 		'method'	=> 'POST',
@@ -35,4 +35,4 @@
 	<button type="submit" class="btn btn-info">Add</button>
 	<a class="btn btn-info" href="{{route('subadmin.viewclass',$id)}}">Quay lại</a>
 	{!!Form::close()!!}
- @endsection
+@endsection
