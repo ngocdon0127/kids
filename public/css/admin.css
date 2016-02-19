@@ -196,6 +196,9 @@ ul#form_test img:hover{
   .content{
     margin: 0 5%;
   }
+  .li-connected {
+    height: 60px;
+  }
 }
 
 @media (max-width: 767px){
