@@ -278,25 +278,27 @@
 				@endif
 				</div>
 				<div>
-					@foreach ($subP as $value)
-						{!! nl2br($value) !!}
-						@if (count($Spaces[$q['id']]) > 0)
-						<select style="color:#cc0066" id="select_space_{{current($Spaces[$q['id']])['id']}}" data-show-icon="true">
-							<?php 
-								$this_answers = $AnswersFor2[current($Spaces[$q['id']])['id']];
-							?>
-							@foreach ($this_answers as $a)
-							<option class="option_space_{{$a['Logical']}}" value="{{$a['Logical']}}">{!! $a['Detail'] !!}</option>
-							@endforeach
-						</select>
-
-						<!-- change normal select into BS3 select manually-->
-						<script type="text/javascript">
-							bsselect("select_space_{{current($Spaces[$q['id']])['id']}}");
-						</script>
-						<?php array_shift($Spaces[$q['id']]) ?>
-						@endif
-					@endforeach
+					<h4 class="title">
+						@foreach ($subP as $value)
+							{!! nl2br($value) !!}
+							@if (count($Spaces[$q['id']]) > 0)
+							<select style="color:#cc0066" id="select_space_{{current($Spaces[$q['id']])['id']}}" data-show-icon="true">
+								<?php 
+									$this_answers = $AnswersFor2[current($Spaces[$q['id']])['id']];
+								?>
+								@foreach ($this_answers as $a)
+								<option class="option_space_{{$a['Logical']}}" value="{{$a['Logical']}}">{!! $a['Detail'] !!}</option>
+								@endforeach
+							</select>
+						
+							<!-- change normal select into BS3 select manually-->
+							<script type="text/javascript">
+								bsselect("select_space_{{current($Spaces[$q['id']])['id']}}");
+							</script>
+							<?php array_shift($Spaces[$q['id']]) ?>
+							@endif
+						@endforeach
+					</h4>
 				</div>
 			<!-- End of Điền từ -->
 			@elseif ($q['FormatID'] == 5)
@@ -321,18 +323,18 @@
 				@endif
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px;">
 				<div class="row">
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding:0">
 							<ul id="ul_subquestion_{{$q['id']}}" class="sortable">
 								@foreach($Subquestions[$q['id']] as $s)
-									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected form-control">{{$s['Question']}}</li>
+									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center"><p>{{$s['Question']}}</p></li>
 								@endforeach
 							</ul>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right:0">
 						<ul id="ul_subquestion_answer_{{$q['id']}}" class="sortable">
 							<?php shuffle($AnswersFor5[$q['id']]) ?>
 							@foreach($AnswersFor5[$q['id']] as $s)
-								<li class="ui-state-default li-connected form-control" id="li_subquestion_answer_{{$s['SubQuestionID']}}">{{$s['Detail']}}</li>
+								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$s['SubQuestionID']}}"><p><bootstrap-select>{{$s['Detail']}}</bootstrap-select></p></li>
 							@endforeach
 						</ul>
 					</div>
@@ -399,13 +401,13 @@
 			@endif
 			@if($q['FormatID'] == 4)
 			<!-- Điền chữ cái -->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0; margin-bottom: 20px">
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="border: #ecf0f1 solid 1px;">
-						<h2 class="title" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
-						<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fill_word" style="padding: 0; margin-bottom: 20px;">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_left" style="border: #ecf0f1 solid 1px;">
+						<h2 class="title text-center fw_left_above" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
+						<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control fw_left_below" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
 						<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_right" style="padding: 0">
 						@if ($q['Photo'] != null)
 								@if ((auth()->user()) && (auth()->user()->admin == 1))
 									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
@@ -436,6 +438,22 @@
 	@endif
 	<script type="text/javascript">
 		$('div[class="btn-group bootstrap-select"').css("width","auto");
+		$('button[class="btn dropdown-toggle btn-default"]').css({"background":"#e0f0ff","color":"#993333","font-weight":"bold"});
+		$(document).ready(function(){
+     		var max_height = 0;
+     		//Duyệt qua 3 cột để lấy kích thước của cột lớn nhất
+     		$(".fw_left,.fw_right").each(function(){
+         	if($(this).height() > max_height)
+          	max_height = $(this).height();
+     	});
+     		console.log("max_height : " + max_height);
+     	//Gán độ cao 3 cột theo giá trị max_heigh
+     	var h2_height = max_height*0.7-30;
+     	$(".fw_left_above").height(h2_height);
+     	// $(".fw_left_above").css({"top":"50%","margin-bottom":h2_height*0.5});
+     	$(".fw_left_below").height(max_height*0.3-30);
+
+    });
 		function checkFilledQuestions(){
 			var setOfSpaces = {!! json_encode($SetOfSpaceIDs) !!};
 			for (var i = 0; i < setOfSpaces.length; i++) {
@@ -656,15 +674,26 @@
 			font-weight: bold;
 			color: #933;
 		}
-		.li-connected {
-			height: 75px;
+		.li-connected{
+    		position: relative;
+			height: 80px;
+			border-radius: 10px;
+			margin-top: 10px;
+		}
+		.li-connected p {
+			margin: 0;
+    		position: absolute;
+    		top: 50%;
+    		left: 50%;
+    		right: -50%;
+    		transform: translate(-50%, -50%);
 		}
 		.li-dragdrop{
 			list-style-type: none;
-			margin: 20;
-			padding: 20;
+			margin: 1px;
 			width: auto;
 			display: inline;
+			
 		}
 	</style>
 	<script>
