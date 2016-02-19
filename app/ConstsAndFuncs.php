@@ -11,6 +11,7 @@ class ConstsAndFuncs
 	// Constants
 	const PERM_ADMIN = 1000;
 	const PERM_SUBADMIN = 990;
+	const IS_PAID = 1;
 	public static $THUMBNAILS = [1 => 'Photo', 2 => 'Video'];
 	public static $FORMATS = [
 		1 => 'Trắc nghiệm',
