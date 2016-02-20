@@ -23,7 +23,7 @@
 		@endif
 	</li>
 	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
-		<a class ="col-xs-12 btn btn-primary" href="{{route('post.edit', $Post['id'])}}">Sửa thông tin bài đăng</a>
+		<a class="col-xs-12 btn btn-primary" href="{{route('post.edit', $Post['id'])}}">Sửa thông tin bài đăng</a>
 		<a class="col-xs-12 btn btn-primary" data-toggle="modal" href='#modal-add-question'>Thêm câu hỏi</a>
 
 		<a class="col-xs-12 btn btn-danger" data-toggle="modal" href='#modal-id'>Xóa bài đăng này</a>
@@ -401,7 +401,7 @@
 			@endif
 			@if($q['FormatID'] == 4)
 			<!-- Điền chữ cái -->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fill_word" style="padding: 0; margin-bottom: 20px;">
+				<!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fill_word" style="padding: 0; margin-bottom: 20px;">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_left" style="border: #ecf0f1 solid 1px;">
 						<h2 style="border:2px solid red" class="title text-center fw_left_above" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
 						<!-- <p class="text-center fw_left_above" id="h2_fillcharacter_{{$q['id']}}" style="font-weight:bold">{{$q['Question']}}</p> -->
@@ -411,14 +411,32 @@
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_right" style="padding: 0">
 						@if ($q['Photo'] != null)
+							@if ((auth()->user()) && (auth()->user()->admin == 1))
+								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+							@else
+								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+							@endif
+						@endif
+					</div>
+				</div> -->
+				<table class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0; margin-bottom: 20px;">
+					<tr style="border: #ecf0f1 solid 1px;">
+						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_right">
+							<h2 class="title text-center fw_left_above" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
+							<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control fw_left_below" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
+							<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
+						</td>
+						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_right" style="padding: 0">
+							@if ($q['Photo'] != null)
 								@if ((auth()->user()) && (auth()->user()->admin == 1))
 									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
 								@else
 									<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
 								@endif
-						@endif
-					</div>
-				</div>
+							@endif
+						</td>
+					</tr>
+				</table>
 			<!-- End of Điền chữ cái -->
 			@endif
 		@endforeach
@@ -506,7 +524,7 @@
 					}
 					else{
 						li1.style.background = '#ff5050';
-						li1.innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).innerHTML + '</span>';
+						li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].children[0].innerHTML + '</span>';
 						li2.style.background = '#ff5050';
 					}
 				};

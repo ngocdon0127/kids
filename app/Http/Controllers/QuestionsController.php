@@ -43,6 +43,7 @@ class QuestionsController extends Controller
 				foreach ($Spaces as $value) {
 					$Answers += array($value['id'] => Answers::where('SpaceID', '=', $value['id'])->get()->toArray());
 				}
+				return view('admin.viewfilledquestion')->with(compact('Question', 'Spaces', 'Answers'));
 			case 3:
 				$Answers = Answers::where('QuestionID', '=', $QuestionID)->get()->toArray();
 				return view('admin.viewarangedquestion')->with(compact('Question', 'Answers'));
