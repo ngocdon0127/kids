@@ -19,11 +19,16 @@ body{
   overflow: hidden;
 }
 
-.side{
+/* .side{
   background: #f0f0f5;
+} */
+.navbar{
+  background: #f2f2f2;
 }
 .sidebar{
-  background:#fff;
+  background: #f2f2f2;
+}
+.sidebar{
   border-left:1px solid  #f0f0f5; 
   border-right:1px solid  #f0f0f5; 
 }
@@ -81,9 +86,9 @@ ul#head li{
   display: inline;
 }
 
-header{
+/* header{
   background-color: #ffffff;
-}
+} */
 
 p.header,
 h1.header{
@@ -150,7 +155,7 @@ li.list_answer:hover{
 .list_answer{
      word-wrap: break-word; 
     font-weight: bold;
-    background: #e0f0ff;
+    background: #9cf;
     padding: 10px;
     color: #993333;
      vertical-align: top; 
