@@ -487,7 +487,7 @@
 			// 	setOfDivs[i].children[0].children[1].style.height = (max_height * 0.3 - 15) + "px";
 			// 	console.log(setOfDivs[i].children[0].children[1].nodeName);
 			// 	console.log('set');
-			};
+			// };
 
 		});
 		function checkFilledQuestions(){

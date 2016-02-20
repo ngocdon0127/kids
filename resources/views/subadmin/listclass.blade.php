@@ -9,8 +9,7 @@
 			<li class="list-group-item list-group-item-warning"><a href="{{route('subadmin.viewclass',$cl->id)}}">{{$cl->classname}}</a></li>
 		@endforeach
 	</ul>
- 	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_SUBADMIN))
+	@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_SUBADMIN))
 		<a href="{{route('subadmin.addclass')}}" class="btn btn-primary">Add Class</a>
 	@endif
 @endsection
-
