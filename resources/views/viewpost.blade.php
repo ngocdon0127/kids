@@ -429,15 +429,21 @@
 			@endif
 		@endforeach
 	</ul>
-	<button class="btn btn-primary" onclick="nopBai()">Nộp bài</button>
+	<button class="btn btn-primary" id="btn-nop-bai" onclick="nopBai()">Nộp bài</button>
 	<script>
+		var isDone = 0;
 		function nopBai(){
+			if (isDone != 0){
+				return;
+			}
 			checkFilledQuestions();
 			checkConnectedQuestions();
 			checkDragDropQuestions();
 			checkArrangedQuestions();
 			checkFillCharacterQuestions();
 			submitResult();
+			isDone = 1;
+			ob("btn-nop-bai").disabled = true;
 		}
 	</script>
 	@if (($DisplayedQuestions >= 0) && ($DisplayedQuestions < $NumOfQuestions))
