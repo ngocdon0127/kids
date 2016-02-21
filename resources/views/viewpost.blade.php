@@ -405,8 +405,8 @@
 					<tr style="border: #ecf0f1 solid 1px; background:#9cf">
 						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
 							<h2 class="title text-center" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
-						</td>
 							<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
+						</td>
 						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" rowspan="2" style="padding: 0">
 							@if ($q['Photo'] != null)
 								@if ((auth()->user()) && (auth()->user()->admin == 1))
