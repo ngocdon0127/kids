@@ -50,7 +50,11 @@ nav{
 
 li#navbar-button:hover,
 a#dropDown:visited{
-  background-color: #f0f0f5;
+  background: #9cf;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #E84B0C;
+  font-weight: bold;
 }
 
 .a {

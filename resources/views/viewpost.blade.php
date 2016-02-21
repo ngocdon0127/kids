@@ -405,9 +405,9 @@
 					<tr style="border: #ecf0f1 solid 1px; background:#9cf">
 						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
 							<h2 class="title text-center" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
-						</td>
 							<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
-						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" rowspan="2" style="padding: 0">
+						</td>
+						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0" rowspan="2">
 							@if ($q['Photo'] != null)
 								@if ((auth()->user()) && (auth()->user()->admin == 1))
 									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}">
@@ -446,7 +446,7 @@
 	@endif
 	<script type="text/javascript">
 		$('div[class="btn-group bootstrap-select"').css("width","auto");
-		$('button[class="btn dropdown-toggle btn-default"]').css({"background":"#9cf","color":"#993333","font-weight":"bold"});
+		$('button[class="btn dropdown-toggle btn-default"]').css({"background":"#9cf","color":"#993333","font-weight":"bold","display":"inline-block"});
 	/*	$(document).ready(function(){
 			var setOfDivs = document.getElementsByClassName('fill_word');
 			console.log(setOfDivs.length);
@@ -460,9 +460,7 @@
 				setOfDivs[i].children[0].children[1].style.height ="48px";
 				console.log("fill : "+setOfDivs[i].children[0].children[1].offsetHeight);
 				console.log('set');
-			};
-
-		});*/
+			};*/
 		function checkFilledQuestions(){
 			var setOfSpaces = {!! json_encode($SetOfSpaceIDs) !!};
 			for (var i = 0; i < setOfSpaces.length; i++) {
@@ -706,6 +704,7 @@
 			margin: 1px;
 			width: auto;
 			display: inline;
+			font-size: 15px;
 		}
 	</style>
 	<script>
