@@ -19,11 +19,16 @@ body{
   overflow: hidden;
 }
 
-.side{
+/* .side{
   background: #f0f0f5;
+} */
+.navbar{
+  background: #f2f2f2;
 }
 .sidebar{
-  background:#fff;
+  background: #f2f2f2;
+}
+.sidebar{
   border-left:1px solid  #f0f0f5; 
   border-right:1px solid  #f0f0f5; 
 }
@@ -45,7 +50,11 @@ nav{
 
 li#navbar-button:hover,
 a#dropDown:visited{
-  background-color: #f0f0f5;
+  background: #9cf;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #E84B0C;
+  font-weight: bold;
 }
 
 .a {
@@ -81,9 +90,9 @@ ul#head li{
   display: inline;
 }
 
-header{
+/* header{
   background-color: #ffffff;
-}
+} */
 
 p.header,
 h1.header{
@@ -150,7 +159,7 @@ li.list_answer:hover{
 .list_answer{
      word-wrap: break-word; 
     font-weight: bold;
-    background: #e0f0ff;
+    background: #9cf;
     padding: 10px;
     color: #993333;
      vertical-align: top; 

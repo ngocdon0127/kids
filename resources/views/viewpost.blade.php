@@ -401,41 +401,27 @@
 			@endif
 			@if($q['FormatID'] == 4)
 			<!-- Điền chữ cái -->
-				<!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fill_word" style="padding: 0; margin-bottom: 20px;">
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_left" style="border: #ecf0f1 solid 1px;">
-						<h2 class="title text-center fw_left_above" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
-						<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control fw_left_below" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
-						<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
-					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fw_right" style="padding: 0">
-						@if ($q['Photo'] != null)
-							@if ((auth()->user()) && (auth()->user()->admin == 1))
-								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
-							@else
-								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
-							@endif
-						@endif
-					</div>
-				</div> -->
 				<table class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0; margin-bottom: 20px;">
-					<tr style="border: #ecf0f1 solid 1px;">
-						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: auto auto">
-							<h2 style="font-size: 25px" class="title text-center fw_left_above" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
+					<tr style="border: #ecf0f1 solid 1px; background:#9cf">
+						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+							<h2 class="title text-center" id="h2_fillcharacter_{{$q['id']}}">{{$q['Question']}}</h2>
+							<input type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
 						</td>
 						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0" rowspan="2">
 							@if ($q['Photo'] != null)
 								@if ((auth()->user()) && (auth()->user()->admin == 1))
-									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
+									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}">
+										<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
+									</a>
 								@else
 									<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
 								@endif
 							@endif
 						</td>
 					</tr>
-					<tr style="border: #ecf0f1 solid 1px;">
-						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: auto auto">
-							<input style="margin: 0" type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control fw_left_below" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
-							<input style="margin: 0" type="hidden" id="answer_fillcharacter_{{$q['id']}}" value="{{$AnswersFor4[$q['id']]['Detail']}}" />
+					<tr style="border: #ecf0f1 solid 1px; background:#66f">
+						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+							<input type="text" id="input_fillcharacter_{{$q['id']}}" class="form-control fw_left_below" value="" placeholder="Input here..." required="required" pattern="" title="Nhập câu trả lời">
 						</td>
 					</tr>
 				</table>
@@ -460,36 +446,21 @@
 	@endif
 	<script type="text/javascript">
 		$('div[class="btn-group bootstrap-select"').css("width","auto");
-		$('button[class="btn dropdown-toggle btn-default"]').css({"background":"#e0f0ff","color":"#993333","font-weight":"bold"});
-		$(document).ready(function(){
-			// var max_height = 0;
-			//Duyệt qua 3 cột để lấy kích thước của cột lớn nhất
-			// $(".fw_left,.fw_right").each(function(){
-			// 	if($(this).height() > max_height)
-			// 	max_height = $(this).height();
-			// });
-			//Gán độ cao 3 cột theo giá trị max_heigh
-			// max_height = max_height*0.7-30;
-			// max_height = $('.fw_right').height();
-			// console.log("max_height : " + max_height);
-			// $(".fw_left_above").height(max_height * 0.7 - 30);
-			// // $(".fw_left_above").css({"top":"50%","margin-bottom":h2_height*0.5});
-			// $(".fw_left_below").height(max_height * 0.3 - 30);
-			// var setOfDivs = document.getElementsByClassName('fill_word');
-			// console.log(setOfDivs.length);
-			// for (var i = 0; i < setOfDivs.length; i++) {
-			// 	console.log('i = ' + i);
-			// 	var max_height = setOfDivs[i].children[1].children[0].clientHeight;
-			// 	console.log(max_height);
-			// 	// setOfDivs[i].children[0].style.height =  (max_height + 60) + "px";
-			// 	setOfDivs[i].children[0].children[0].style.height = (max_height * 0.7 - 30) + "px";
-			// 	console.log(setOfDivs[i].children[0].children[0].nodeName);
-			// 	setOfDivs[i].children[0].children[1].style.height = (max_height * 0.3 - 15) + "px";
-			// 	console.log(setOfDivs[i].children[0].children[1].nodeName);
-			// 	console.log('set');
-			// };
-
-		});
+		$('button[class="btn dropdown-toggle btn-default"]').css({"background":"#9cf","color":"#993333","font-weight":"bold","display":"inline-block"});
+	/*	$(document).ready(function(){
+			var setOfDivs = document.getElementsByClassName('fill_word');
+			console.log(setOfDivs.length);
+			for (var i = 0; i < setOfDivs.length; i++) {
+				console.log('i = ' + i);
+				var max_height = setOfDivs[i].children[1].children[0].offsetHeight;
+				console.log("max_height : "+ max_height);
+				// setOfDivs[i].children[0].style.height =  (max_height + 60) + "px";
+				setOfDivs[i].children[0].children[0].style.height = (max_height-78)+"px";
+				console.log("text : "+setOfDivs[i].children[0].children[0].offsetHeight);
+				setOfDivs[i].children[0].children[1].style.height ="48px";
+				console.log("fill : "+setOfDivs[i].children[0].children[1].offsetHeight);
+				console.log('set');
+			};*/
 		function checkFilledQuestions(){
 			var setOfSpaces = {!! json_encode($SetOfSpaceIDs) !!};
 			for (var i = 0; i < setOfSpaces.length; i++) {
@@ -512,6 +483,7 @@
 		}
 
 		function checkConnectedQuestions() {
+			console.log("Bắt đầu");
 			var setOfQuestionIDs = {!! json_encode($QuestionFor5IDs) !!};
 			var lenq = 'li_subquestion_'.length;
 			var lena = 'li_subquestion_answer_'.length;
@@ -530,14 +502,17 @@
 						score++;
 						li1.style.background = '#66ff66';
 						li2.style.background = '#66ff66';
+						console.log("Đúng");
 					}
 					else{
 						li1.style.background = '#ff5050';
 						li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].children[0].innerHTML + '</span>';
 						li2.style.background = '#ff5050';
+						console.log("Sai");
 					}
 				};
 			};
+			console.log("Kết thúc");
 		}
 
 		function checkDragDropQuestions(){
@@ -706,7 +681,7 @@
 		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 		.li-connected, .li-dragdrop{
 			cursor: pointer;
-			background: #e0f0ff;
+			background: #9cf;
 			font-weight: bold;
 			color: #933;
 		}
@@ -729,7 +704,7 @@
 			margin: 1px;
 			width: auto;
 			display: inline;
-			
+			font-size: 15px;
 		}
 	</style>
 	<script>

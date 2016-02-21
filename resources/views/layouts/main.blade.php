@@ -46,8 +46,12 @@
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/bootstrap-select.js"></script>
 	<script type="text/javascript" src="/js/style.js"></script>
-
-
+	<style>
+		body,
+		header{
+			background-image: url(http://www.cbc.ca/kidscbc2/content/themes/Kids2_winter_tile.jpg);
+		}
+	</style>
 	@if (auth() && (auth()->user()))
 	<script type="text/javascript">
 		var logout = 0;
