@@ -642,8 +642,8 @@
 	<script type="text/javascript">
 		// 	var lenq = 'li_subquestion_'.length;
 		// 	var lena = 'li_subquestion_answer_'.length;
-		var maxConnectHeightOfLis = 0;
 		for (var i = 0; i < setOfQuestionIDs.length; i++) {
+			var maxConnectHeightOfLis = 0;
 			var ulq = ob('ul_subquestion_' + setOfQuestionIDs[i]);
 			for (var j = 0; j < ulq.children.length; j++) {
 				try{
@@ -663,6 +663,9 @@
 
 				}
 				console.log(maxConnectHeightOfLis);
+			}
+			if (maxConnectHeightOfLis <= 0){
+				continue;
 			}
 			for (var j = 0; j < ulq.children.length; j++) {
 				ulq.children[j].style.height = maxConnectHeightOfLis + 'px';
