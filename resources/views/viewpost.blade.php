@@ -642,38 +642,41 @@
 	<script type="text/javascript">
 		// 	var lenq = 'li_subquestion_'.length;
 		// 	var lena = 'li_subquestion_answer_'.length;
-		for (var i = 0; i < setOfQuestionIDs.length; i++) {
-			var maxConnectHeightOfLis = 0;
-			var ulq = ob('ul_subquestion_' + setOfQuestionIDs[i]);
-			for (var j = 0; j < ulq.children.length; j++) {
-				try{
-					maxConnectHeightOfLis = (maxConnectHeightOfLis < ulq.children[j].children[1].clientHeight) ? ulq.children[j].children[1].clientHeight : maxConnectHeightOfLis;
-				}
-				catch (e){
+		jQuery(document).ready(
+			function(){
+				for (var i = 0; i < setOfQuestionIDs.length; i++) {
+				var maxConnectHeightOfLis = 0;
+				var ulq = ob('ul_subquestion_' + setOfQuestionIDs[i]);
+				for (var j = 0; j < ulq.children.length; j++) {
+					try{
+						maxConnectHeightOfLis = (maxConnectHeightOfLis < ulq.children[j].children[1].clientHeight) ? ulq.children[j].children[1].clientHeight : maxConnectHeightOfLis;
+					}
+					catch (e){
 
+					}
+				}
+				var ula = ob('ul_subquestion_answer_' + setOfQuestionIDs[i]);
+				for (var j = 0; j < ula.children.length; j++) {
+					try {
+						maxConnectHeightOfLis = (maxConnectHeightOfLis < ula.children[j].children[1].clientHeight) ? ula.children[j].children[1].clientHeight : maxConnectHeightOfLis;
+					}
+					catch (e){
+
+					}
+					
 				}
 				console.log(maxConnectHeightOfLis);
-			}
-			var ula = ob('ul_subquestion_answer_' + setOfQuestionIDs[i]);
-			for (var j = 0; j < ula.children.length; j++) {
-				try {
-					maxConnectHeightOfLis = (maxConnectHeightOfLis < ula.children[j].children[1].clientHeight) ? ula.children[j].children[1].clientHeight : maxConnectHeightOfLis;
+				if (maxConnectHeightOfLis <= 0){
+					continue;
 				}
-				catch (e){
-
+				for (var j = 0; j < ulq.children.length; j++) {
+					ulq.children[j].style.height = maxConnectHeightOfLis + 'px';
 				}
-				console.log(maxConnectHeightOfLis);
+				for (var j = 0; j < ula.children.length; j++) {
+					ula.children[j].style.height = maxConnectHeightOfLis + 'px';
+				}
 			}
-			if (maxConnectHeightOfLis <= 0){
-				continue;
-			}
-			for (var j = 0; j < ulq.children.length; j++) {
-				ulq.children[j].style.height = maxConnectHeightOfLis + 'px';
-			}
-			for (var j = 0; j < ula.children.length; j++) {
-				ula.children[j].style.height = maxConnectHeightOfLis + 'px';
-			}
-		};
+		});
 	</script>
 	<div class="form-control" id="resultText" style="display: none; height: 200px;">
 		<b class="title" id="writeResult"></b> <br />
