@@ -326,15 +326,27 @@
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding:0">
 							<ul id="ul_subquestion_{{$q['id']}}" class="sortable">
 								@foreach($Subquestions[$q['id']] as $s)
-									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center"><p>{{$s['Question']}}</p></li>
+									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center">
+										@if ($s['Photo'] != null)
+										<img src="/images/imageSubquestion/{{$s['Photo']}}" alt="{{$s['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
+										@endif
+										<p>{{$s['Question']}}</p>
+									</li>
 								@endforeach
 							</ul>
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right:0">
 						<ul id="ul_subquestion_answer_{{$q['id']}}" class="sortable">
 							<?php shuffle($AnswersFor5[$q['id']]) ?>
-							@foreach($AnswersFor5[$q['id']] as $s)
-								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$s['SubQuestionID']}}"><p><bootstrap-select>{{$s['Detail']}}</bootstrap-select></p></li>
+							@foreach($AnswersFor5[$q['id']] as $a)
+								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$a['SubQuestionID']}}">
+									<p>
+									@if ($a['Photo'] != null)
+									<img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
+									@endif
+									<bootstrap-select>{{$a['Detail']}}</bootstrap-select>
+									</p>
+								</li>
 							@endforeach
 						</ul>
 					</div>
