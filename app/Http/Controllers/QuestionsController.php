@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Answers;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SubquestionsController;
+use App\Http\Controllers\AnswersController;
 use App\Questions;
 use App\Posts;
 use App\Spaces;
@@ -255,9 +256,10 @@ class QuestionsController extends Controller
 
 		switch ($format){
 			case 1:
+			case 6:
 				$answers = Answers::where('QuestionID', '=', $id)->get()->toArray();
 				foreach ($answers as $answer) {
-					Answers::destroy($answer['id']);
+					AnswersController::destroy($answer['id']);
 				}
 				break;
 			case 2:
@@ -269,13 +271,13 @@ class QuestionsController extends Controller
 			case 3:
 				$answers = Answers::where('QuestionID', '=', $id)->get()->toArray();
 				foreach ($answers as $answer) {
-					Answers::destroy($answer['id']);
+					AnswersController::destroy($answer['id']);
 				}
 				break;
 			case 4:
 				$answers = Answers::where('QuestionID', '=', $id)->get()->toArray();
 				foreach ($answers as $answer) {
-					Answers::destroy($answer['id']);
+					AnswersController::destroy($answer['id']);
 				}
 				break;
 			case 5:
