@@ -247,7 +247,6 @@ class PostsController extends Controller
 			return redirect('/');
 		}
 		$data = $request->all();
-
 		$post = new Posts();
 		$post->CourseID = $data['CourseID'];
 		$post->ThumbnailID = $data['ThumbnailID'];
@@ -261,14 +260,8 @@ class PostsController extends Controller
 				$post = Posts::orderBy('id', 'desc')->first();
 				//Photo
 				$file = $request->file('Photo');
-//              $file = Request::file('Photo');
 				$post->Photo = 'Post_' . $data['CourseID'] . '_' . $post->id . "_-Evangels-English-www.evangelsenglish.com_" . "." . $file->getClientOriginalExtension();
 				$file->move(base_path() . '/public/images/imagePost/', $post->Photo);
-
-
-				// (intval(Posts::orderBy('created_at', 'desc')->first()->id) + 1)
-
-
 				$post->update();
 				break;
 			case '2': // Video
