@@ -327,10 +327,10 @@
 							<ul id="ul_subquestion_{{$q['id']}}" class="sortable">
 								@foreach($Subquestions[$q['id']] as $s)
 									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center">
+										<p>{{$s['Question']}}</p>
 										@if ($s['Photo'] != null)
 										<img src="/images/imageSubquestion/{{$s['Photo']}}" alt="{{$s['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
 										@endif
-										<p>{{$s['Question']}}</p>
 									</li>
 								@endforeach
 							</ul>
@@ -341,11 +341,11 @@
 							@foreach($AnswersFor5[$q['id']] as $a)
 								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$a['SubQuestionID']}}">
 									<p>
+									<bootstrap-select>{{$a['Detail']}}</bootstrap-select>
+									</p>
 									@if ($a['Photo'] != null)
 									<img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
 									@endif
-									<bootstrap-select>{{$a['Detail']}}</bootstrap-select>
-									</p>
 								</li>
 							@endforeach
 						</ul>
@@ -500,9 +500,10 @@
 			}
 		}
 
+		var setOfQuestionIDs = {!! json_encode($QuestionFor5IDs) !!};
+
 		function checkConnectedQuestions() {
 			console.log("Bắt đầu");
-			var setOfQuestionIDs = {!! json_encode($QuestionFor5IDs) !!};
 			var lenq = 'li_subquestion_'.length;
 			var lena = 'li_subquestion_answer_'.length;
 			for (var i = 0; i < setOfQuestionIDs.length; i++) {
@@ -524,7 +525,12 @@
 					}
 					else{
 						li1.style.background = '#ff5050';
-						li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].children[0].innerHTML + '</span>';
+						try {
+							li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].children[0].innerHTML + '</span>';
+						}
+						catch (e){
+
+						}
 						li2.style.background = '#ff5050';
 						console.log("Sai");
 					}
@@ -633,6 +639,39 @@
 			}); //end of ajax
 		}
 	</script>
+	<script type="text/javascript">
+		// 	var lenq = 'li_subquestion_'.length;
+		// 	var lena = 'li_subquestion_answer_'.length;
+		var maxConnectHeightOfLis = 0;
+		for (var i = 0; i < setOfQuestionIDs.length; i++) {
+			var ulq = ob('ul_subquestion_' + setOfQuestionIDs[i]);
+			for (var j = 0; j < ulq.children.length; j++) {
+				try{
+					maxConnectHeightOfLis = (maxConnectHeightOfLis < ulq.children[j].children[1].clientHeight) ? ulq.children[j].children[1].clientHeight : maxConnectHeightOfLis;
+				}
+				catch (e){
+
+				}
+				console.log(maxConnectHeightOfLis);
+			}
+			var ula = ob('ul_subquestion_answer_' + setOfQuestionIDs[i]);
+			for (var j = 0; j < ula.children.length; j++) {
+				try {
+					maxConnectHeightOfLis = (maxConnectHeightOfLis < ula.children[j].children[1].clientHeight) ? ula.children[j].children[1].clientHeight : maxConnectHeightOfLis;
+				}
+				catch (e){
+
+				}
+				console.log(maxConnectHeightOfLis);
+			}
+			for (var j = 0; j < ulq.children.length; j++) {
+				ulq.children[j].style.height = maxConnectHeightOfLis + 'px';
+			}
+			for (var j = 0; j < ula.children.length; j++) {
+				ula.children[j].style.height = maxConnectHeightOfLis + 'px';
+			}
+		};
+	</script>
 	<div class="form-control" id="resultText" style="display: none; height: 200px;">
 		<b class="title" id="writeResult"></b> <br />
 	</div>
@@ -703,11 +742,15 @@
 			font-weight: bold;
 			color: #933;
 		}
+		.img-responsive{
+			border-radius: 10px;
+		}
 		.li-connected{
 			position: relative;
 			height: 80px;
 			border-radius: 10px;
 			margin-top: 10px;
+			padding: auto;
 		}
 		.li-connected p {
 			margin: 0;
