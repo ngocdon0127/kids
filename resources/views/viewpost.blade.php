@@ -524,7 +524,7 @@
 					else{
 						li1.style.background = '#ff5050';
 						try {
-							li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].children[0].innerHTML + '</span>';
+							li1.children[0].innerHTML += '<span style="color: #fff"> => ' + ob('li_subquestion_answer_' + ss1).children[0].innerHTML + '</span>';
 						}
 						catch (e){
 
