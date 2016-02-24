@@ -4,12 +4,12 @@
 @endsection
 @section('body.content')
 	<div class="container">
-		<img id="img" src="/test.jpg" alt="" class="img-responsive" />
+		<div id="divimg"><img id="img" src="/test.jpg" alt="" class="img-responsive" /></div>
 		<script>
 			function ob (x) {
 				return document.getElementById(x);
 			}
-			console.log(ob('img').clientHeight);
+			console.log(ob('divimg').clientHeight);
 		</script>
 	</div>
 
