@@ -4,7 +4,7 @@
 @endsection
 @section('body.content')
 	<div class="container">
-		<img id="img" src="/images/imageAnswer/Answer_SQ_234_7019_-Evangels-English-www.evangelsenglish.com_.jpg" alt="" class="img-responsive" />
+		<img id="img" src="/test.jpg" alt="" class="img-responsive" />
 		<script>
 			function ob (x) {
 				return document.getElementById(x);
