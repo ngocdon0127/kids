@@ -287,3 +287,10 @@ Route::get('/ajax/dic', [
 	'as' => 'ajax.dic',
 	'uses' => 'PageController@dic'
 ]);
+
+Route::get('/dm', [
+	'as' => 'dm',
+	function(){
+		return view('1');
+	}
+]);

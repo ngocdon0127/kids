@@ -341,7 +341,7 @@
 							@foreach($AnswersFor5[$q['id']] as $a)
 								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$a['SubQuestionID']}}">
 									<p>
-									<bootstrap-select>{{$a['Detail']}}</bootstrap-select>
+									{{$a['Detail']}}
 									</p>
 									@if ($a['Photo'] != null)
 									<img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
