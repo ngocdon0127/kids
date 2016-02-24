@@ -329,7 +329,7 @@
 									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center">
 										<p>{{$s['Question']}}</p>
 										@if ($s['Photo'] != null)
-										<img src="/images/imageSubquestion/{{$s['Photo']}}" alt="{{$s['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
+										<div><img src="/images/imageSubquestion/{{$s['Photo']}}" alt="{{$s['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive"></div>
 										@endif
 									</li>
 								@endforeach
