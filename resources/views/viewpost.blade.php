@@ -321,9 +321,9 @@
 						</div>
 					@endif
 				@endif
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px">
 				<div class="row">
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding:0">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 15px">
 							<ul id="ul_subquestion_{{$q['id']}}" class="sortable">
 								@foreach($Subquestions[$q['id']] as $s)
 									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center">
@@ -335,16 +335,14 @@
 								@endforeach
 							</ul>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right:0">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 15px">
 						<ul id="ul_subquestion_answer_{{$q['id']}}" class="sortable">
 							<?php shuffle($AnswersFor5[$q['id']]) ?>
 							@foreach($AnswersFor5[$q['id']] as $a)
 								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$a['SubQuestionID']}}">
-									<p>
-									<bootstrap-select>{{$a['Detail']}}</bootstrap-select>
-									</p>
+									<p>{{$a['Detail']}}</p>
 									@if ($a['Photo'] != null)
-									<img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
+									<div><img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive"><div>
 									@endif
 								</li>
 							@endforeach
