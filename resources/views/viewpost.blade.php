@@ -329,7 +329,7 @@
 									<li id="li_subquestion_{{$s['id']}}" class="ui-state-default li-connected text-center">
 										<p>{{$s['Question']}}</p>
 										@if ($s['Photo'] != null)
-										<div><img src="/images/imageSubquestion/{{$s['Photo']}}" alt="{{$s['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive"></div>
+										<img src="/images/imageSubquestion/{{$s['Photo']}}" alt="{{$s['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
 										@endif
 									</li>
 								@endforeach
@@ -342,7 +342,7 @@
 								<li class="ui-state-default li-connected text-center" id="li_subquestion_answer_{{$a['SubQuestionID']}}">
 									<p>{{$a['Detail']}}</p>
 									@if ($a['Photo'] != null)
-									<div><img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive"><div>
+									<img src="/images/imageAnswer/{{$a['Photo']}}" alt="{{'Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" class="img-responsive">
 									@endif
 								</li>
 							@endforeach
@@ -638,13 +638,15 @@
 		}
 	</script>
 	<script type="text/javascript">
-		// 	var lenq = 'li_subquestion_'.length;
-		// 	var lena = 'li_subquestion_answer_'.length;
-		var delayToSetHeight = 3000;
+		// When the page is fully loaded,
+		// delay this time before set height of <li> tags in Connected questions
+		// to guaranteed clientHeight value of responsive image is true.
+		var delayToSetHeight = 2000;
+
 		jQuery(document).ready(
 			function(){
 				setTimeout(function() {
-					console.log("start");
+					// console.log("start");
 					for (var i = 0; i < setOfQuestionIDs.length; i++) {
 						var maxConnectHeightOfLis = 0;
 						var ulq = ob('ul_subquestion_' + setOfQuestionIDs[i]);
@@ -659,7 +661,7 @@
 								maxConnectHeightOfLis = (maxConnectHeightOfLis < ula.children[j].children[1].clientHeight) ? ula.children[j].children[1].clientHeight : maxConnectHeightOfLis;
 							}
 						}
-						console.log(maxConnectHeightOfLis);
+						// console.log(maxConnectHeightOfLis);
 						if (maxConnectHeightOfLis <= 0){
 							continue;
 						}
@@ -719,7 +721,7 @@
 						<img class="img-responsive" alt="{{$np['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imagePost/{{$np['Photo']}}" />
 					@elseif($np['ThumbnailID'] == '2')
 					<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$np['Video']}}" frameborder="0" allowfullscreen></iframe>
+						<img class="img-responsive" alt="{{$np['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="http://img.youtube.com/vi/{{$np['Video']}}/2.jpg" />
 					</div>
 					@endif
 					<h4>{{$np['Title']}}</h4>
