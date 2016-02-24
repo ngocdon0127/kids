@@ -644,26 +644,20 @@
 		// 	var lena = 'li_subquestion_answer_'.length;
 		jQuery(document).ready(
 			function(){
+				console.log("start");
 				for (var i = 0; i < setOfQuestionIDs.length; i++) {
 				var maxConnectHeightOfLis = 0;
 				var ulq = ob('ul_subquestion_' + setOfQuestionIDs[i]);
 				for (var j = 0; j < ulq.children.length; j++) {
-					try{
+					if (ulq.children[j].children.length > 1){
 						maxConnectHeightOfLis = (maxConnectHeightOfLis < ulq.children[j].children[1].clientHeight) ? ulq.children[j].children[1].clientHeight : maxConnectHeightOfLis;
-					}
-					catch (e){
-
 					}
 				}
 				var ula = ob('ul_subquestion_answer_' + setOfQuestionIDs[i]);
 				for (var j = 0; j < ula.children.length; j++) {
-					try {
+					if (ula.children[j].children.length > 1){
 						maxConnectHeightOfLis = (maxConnectHeightOfLis < ula.children[j].children[1].clientHeight) ? ula.children[j].children[1].clientHeight : maxConnectHeightOfLis;
 					}
-					catch (e){
-
-					}
-					
 				}
 				console.log(maxConnectHeightOfLis);
 				if (maxConnectHeightOfLis <= 0){
