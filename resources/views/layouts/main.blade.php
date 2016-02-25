@@ -145,7 +145,7 @@
 				<div class="col-sm-3 col-md-3 col-lg-3">
 					@yield('body.navleft')
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">					
+				<div class="col-xs-12 col-sm-6 col-md-6">
 					@yield('body.content')
 				</div>
 				<div class="col-xs-12 col-sm-3 col-md-3">
