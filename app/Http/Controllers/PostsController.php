@@ -35,10 +35,6 @@ class PostsController extends Controller
 		else{
 			$hidden_course_ids = array();
 			$courses = Courses::where('Hidden', '=', 1)->get()->toArray();
-			if (count($courses) < 1){
-				return view('errors.404');
-				return view('userindex')->with(['Posts' => [], 'newpost' => [], 'paginateBaseLink' => '/']);
-			}
 			foreach ($courses as $value) {
 				$hidden_course_ids = array_merge($hidden_course_ids, [$value['id']]);
 			}
