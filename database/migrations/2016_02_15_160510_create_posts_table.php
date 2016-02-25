@@ -14,6 +14,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('Hidden')->default(0);
             $table->integer('CourseID');
             $table->integer('ThumbnailID');
             $table->string('Title');

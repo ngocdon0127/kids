@@ -16,6 +16,7 @@ class CreateSubquestionsTable extends Migration
             $table->increments('id');
             $table->integer('QuestionID');
             $table->string('Question');
+            $table->string('Photo')->default(null);
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class CreateAnswersTable extends Migration
             $table->integer('QuestionID');
             $table->integer('SpaceID');
             $table->integer('SubQuestionID');
+            $table->string('Photo')->default(null);
             $table->boolean('Logical')->default(false);
             $table->string('Detail')->default(null);
             $table->timestamps();

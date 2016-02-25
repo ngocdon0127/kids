@@ -30,14 +30,18 @@ ADD COURSE
 		<h1 class="title">Thêm khóa học mới</h1>
 		{!! Form::open(['name' => 'addCourseForm', 'route' => ['admin.addcourse'],'role'=>'form']) !!}
 			<div class="form-group">
+				{!! Form::label('Hidden', 'Khóa học ẩn? ', ['class' => 'control-label']) !!}
+				{!! Form::checkbox('Hidden', '') !!}
+			</div>
+			<div class="form-group">
 				{!! Form::label('Title', 'Title : ',['class' => 'control-label']) !!}
-					{!! Form::text('Title','',['class'=>'form-control']) !!}
+				{!! Form::text('Title','',['class'=>'form-control']) !!}
 				<span id="question_title_err"></span>
 			</div>
 			<div class="form-group">
 				{!! Form::label('Description', 'Description : ',['class' => 'control-label']) !!}
-					{!! Form::text('Description','',['class'=>'form-control']) !!}
-			</div> 
+				{!! Form::text('Description','',['class'=>'form-control']) !!}
+			</div>
 
 			{!! Form::button('Thêm',['class'=>'btn btn-primary', 'onClick' => 'submitForm()']) !!}
 

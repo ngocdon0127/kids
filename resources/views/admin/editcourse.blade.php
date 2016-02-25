@@ -36,17 +36,20 @@
 	<h1 class="title">Sửa thông tin khóa học</h1>
 	{!! Form::model($course, ['method' => 'PUT', 'name' => 'editCourseForm', 'route' => ['course.update', $course['id']], 'role'=>'form']) !!}
 		<div class="form-group">
+			{!! Form::label('Hidden', 'Khóa học ẩn? ', ['class' => 'control-label']) !!}
+			{!! Form::checkbox('Hidden', null) !!}
+		</div>
+		<div class="form-group">
 			{!! Form::label('Title', 'Title : ',['class' => 'control-label']) !!}
-				{!! Form::text('Title', null, ['class'=>'form-control']) !!}
+			{!! Form::text('Title', null, ['class'=>'form-control']) !!}
 			<script type="text/javascript">
 				oldTitle = ob('Title').value;
-				ob('CategoryID').value = {{$course['CategoryID']}}
 			</script>
 			<span id="question_title_err"></span>
 		</div>
 		<div class="form-group">
 			{!! Form::label('Description', 'Description : ',['class' => 'control-label']) !!}
-				{!! Form::text('Description', null, ['class'=>'form-control']) !!}
+			{!! Form::text('Description', null, ['class'=>'form-control']) !!}
 		</div> 
 
 		{!! Form::button('Cập nhật',['class'=>'btn btn-primary', 'onClick' => 'submitForm()']) !!}
