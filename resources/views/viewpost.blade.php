@@ -254,7 +254,7 @@
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
-							@if ((auth()->user()) && (auth()->user()->admin == 1))
+							@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
 							@else
 								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
@@ -307,7 +307,7 @@
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
-							@if ((auth()->user()) && (auth()->user()->admin == 1))
+							@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
 							@else
 								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
@@ -368,7 +368,7 @@
 				@if ($q['ThumbnailID'] == 1)
 					@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
-							@if ((auth()->user()) && (auth()->user()->admin == 1))
+							@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
 							@else
 								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
@@ -397,7 +397,7 @@
 				<h3>{{$q['Question']}}</h3>
 				@if ($q['Photo'] != null)
 						<li class="list-group-item list-group-item-info">
-							@if ((auth()->user()) && (auth()->user()->admin == 1))
+							@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 								<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}"><img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" /></a>
 							@else
 								<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
@@ -419,7 +419,7 @@
 						</td>
 						<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0" rowspan="2">
 							@if ($q['Photo'] != null)
-								@if ((auth()->user()) && (auth()->user()->admin == 1))
+								@if ((auth()->user()) && (auth()->user()->admin >= App\ConstsAndFuncs::PERM_ADMIN))
 									<a style="text-decoration: none;" href="{{route('user.viewquestion', $q['id'])}}">
 										<img class="img-responsive" alt="{{$q['Question'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imageQuestion/{{$q['Photo']}}" />
 									</a>
