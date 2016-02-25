@@ -35,8 +35,11 @@ class PostsController extends Controller
 		else{
 			$hidden_course_ids = array();
 			$courses = Courses::where('Hidden', '=', 1)->get()->toArray();
+			if (count($courses) < 1){
+				return view('userindex')->with(['Posts' => null, 'newpost' => null, 'paginateBaseLink' => '/']);
+			}
 			foreach ($courses as $value) {
-				$hidden_course_ids = array_merge($hidden_course_ids, [$courses['id']]);
+				$hidden_course_ids = array_merge($hidden_course_ids, [$value['id']]);
 			}
 			$Posts = Posts::whereNotIn('CourseID', $hidden_course_ids)->where('Hidden', '=', 0)->orderBy('id', 'desc')->paginate(5);
 			$newpost = Posts::whereNotIn('CourseID', $hidden_course_ids)->where('Hidden', '=', 0)->orderBy('visited', 'dsc')->take(5)->get();
