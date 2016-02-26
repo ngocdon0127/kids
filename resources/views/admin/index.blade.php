@@ -9,7 +9,7 @@
 		@if ($course['Hidden'] == 1)
 		<li class="list-group-item list-group-item-warning"><a href="{{route('admin.viewcourse',$course['id'])}}">{{$course['Title']}}</a></li>
 		@else
-		<li class="list-group-item list-group-item-warning"><a href="{{route('admin.viewcourse',$course['id'])}}">{{$course['Title']}}</a></li>
+		<li class="list-group-item list-group-item-info"><a href="{{route('admin.viewcourse',$course['id'])}}">{{$course['Title']}}</a></li>
 		@endif
 	@endforeach
 	</ul>
