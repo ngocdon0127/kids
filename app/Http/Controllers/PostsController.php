@@ -254,9 +254,17 @@ class PostsController extends Controller
 		$result += ['newpost' => $newpost];
 		// dd($newpost);
 		// dd($post);
+		$ahtk = Tags::where('PostID', '=', $postID)->get()->toArray();
+		$Hashtag = array();
+		foreach ($ahtk as $k){
+			$ht = Hashtags::find($k['HashtagID'])['Hashtag'];
+			if (strlen($ht) > 0)
+				$Hashtag = array_merge($Hashtag, [$ht]);
+		}
 		return view('viewpost')->with($result)->with(compact([
-			'result', 
-			'newpost', 
+			'result',
+			'newpost',
+			'Hashtag',
 			// Answers for Format Trắc nghiệm
 			'AnswersFor1',
 			'TrueAnswersFor1',
