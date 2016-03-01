@@ -694,8 +694,8 @@
 			<li class="next"><a href="{{route('user.viewpost', $NextPost)}}">Next post</span></a></li>
 		@endif
 	</ul>
-	<div class="fb-comments" data-href="{!! '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="500" data-numposts="5"></div>
-	<div class="fb-like" data-href="{!! '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="450" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+	<div class="fb-comments" data-href="{!! 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="500" data-numposts="5"></div>
+	<div class="fb-like" data-href="{!! 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="450" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 	<input type="hidden" id="inputDictionary" value="tmp">
 	<div class="modal fade" id="modal-id-dictionary">
 		<div class="modal-dialog">
