@@ -694,8 +694,8 @@
 			<li class="next"><a href="{{route('user.viewpost', $NextPost)}}">Next post</span></a></li>
 		@endif
 	</ul>
-	<div class="fb-comments" data-href="{!! 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="500" data-numposts="5"></div>
-	<div class="fb-like" data-href="{!! 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="450" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+	<div class="fb-comments" data-href="{!! '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="500" data-numposts="5"></div>
+	<div class="fb-like" data-href="{!! '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']!!}" data-width="450" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 	<input type="hidden" id="inputDictionary" value="tmp">
 	<div class="modal fade" id="modal-id-dictionary">
 		<div class="modal-dialog">
@@ -727,7 +727,7 @@
 						<img class="img-responsive" alt="{{$np['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="/images/imagePost/{{$np['Photo']}}" />
 					@elseif($np['ThumbnailID'] == '2')
 					<div class="embed-responsive embed-responsive-4by3">
-						<img class="img-responsive" alt="{{$np['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="http://img.youtube.com/vi/{{$np['Video']}}/2.jpg" />
+						<img class="img-responsive" alt="{{$np['Title'] . ' - Evangels English - '}}{{$_SERVER['HTTP_HOST']}}" src="//img.youtube.com/vi/{{$np['Video']}}/2.jpg" />
 					</div>
 					@endif
 					<h4>{{$np['Title']}}</h4>
